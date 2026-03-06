@@ -1,0 +1,328 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+:root {
+  --green: #082415;
+  --gold: #d9c169;
+  --muted: #777;
+  --shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+}
+
+/* PAGE WRAPPER */
+.pageWrap { 
+  margin-top: 4%;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background: #fff;
+  font-family: "Open Sans", sans-serif;
+}
+
+/* TOPBAR */
+.topBar {
+  background: var(--green);
+  color: var(--gold);
+  padding: 18px 40px;
+  text-align: center;
+  font-size: 22px;
+  font-family: "Montserrat", serif;
+  font-weight: bold;
+  letter-spacing: 0.15em;
+}
+
+/* MAIN LAYOUT */
+.container {
+  display: grid;
+  grid-template-columns: 260px 1fr;
+  min-height: calc(100vh - 60px);
+}
+
+/* SIDEBAR NAVIGATION */
+.nav {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.navItem {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: #333;
+  padding: 8px 12px;
+  text-decoration: none;
+  font-size: 15px;
+  transition: 0.2s ease;
+}
+
+.navItem:hover {
+  background: rgba(0,0,0,0.05);
+}
+
+.active {
+  color: var(--green);
+  font-weight: 600;
+  background: rgba(0,0,0,0.05);
+}
+
+/* CONTENT AREA */
+.content {
+  padding: 40px 50px;
+}
+
+.sectionTitle {
+  font-family: "Montserrat", serif;
+  font-size: 20px;
+  margin-bottom: 24px;
+  color: var(--green);
+}
+
+/* EMPTY STATE */
+.emptyBox {
+  background: #fff;
+  padding: 40px;
+  border-radius: 8px;
+  box-shadow: var(--shadow);
+  text-align: center;
+}
+
+.emptyTitle {
+  font-weight: bold;
+  font-family: "Montserrat", serif;
+}
+
+.emptyText {
+  color: var(--muted);
+  font-size: 0.95rem;
+}
+
+/* FILTERS */
+.filterRow {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+
+.filterBtn {
+  border: 1px solid rgba(0,0,0,0.1);
+  padding: 8px 18px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  background: #fff;
+  transition: 0.2s ease;
+}
+
+.filterBtn:hover {
+  background: rgba(0,0,0,0.03);
+}
+
+.activeFilter {
+  background: #f4f0e1;
+  border-color: var(--gold);
+  font-weight: 600;
+}
+
+/* ORDER LIST */
+.ordersList {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* ORDER CARD */
+.orderCard {
+  position: relative;
+  background: #fff;
+  border: 1px solid rgba(0,0,0,0.06);
+  box-shadow: 0 5px 20px rgba(0,0,0,0.04);
+  padding: 18px;
+  border-radius: 6px;
+}
+
+/* STATUS ROW */
+.statusRow {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+  color: rgb(47, 47, 47);
+}
+
+.statusTag {
+  font-size: 0.8rem;
+  padding: 4px 10px;
+  font-weight: 600;
+  text-transform: capitalize;
+  letter-spacing: 0.05em;
+  font-family: "Montserrat";
+}
+
+.InProgress {
+  background: #fff1d1;
+  color: #a66f00;
+}
+
+.Delivered {
+  background: #e2f6e2;
+  color: #287b28;
+}
+
+.Cancelled {
+  background: #f3f3f3;
+  color: #777;
+}
+
+.date {
+  color: var(--muted);
+  font-size: 0.85rem;
+}
+
+/* CONTENT WRAP */
+.orderContent {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+/* PRODUCT IMAGE */
+.imageWrap {
+  width: 80px;
+  height: 90px;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.imgs {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* ORDER INFO */
+.orderInfo {
+  flex: 1;
+}
+
+.orderId {
+  color: #777;
+  font-size: 0.85rem;
+  margin-bottom: 3px;
+}
+
+.orderId span {
+  color: #5c5c5c;
+  text-decoration: none;
+}
+
+.title {
+  font-size: 0.8rem;
+  font-family: "Montserrat", serif;
+  font-weight: 600;
+  color: #000;
+  text-transform: uppercase;
+}
+
+.desc {
+  font-size: 0.9rem;
+  color: #777;
+}
+
+.price {
+  font-weight: 700;
+  color: #000;
+  margin-top: 6px;
+}
+
+/* ARROW */
+.arrow {
+  position: absolute;
+  right: 16px;
+  top: 50%;
+  font-size: 20px;
+  color: #aaa;
+  transform: translateY(-50%);
+}
+
+/* ============================================================
+   RESPONSIVE FIXES — MOBILE + TABLET + iPAD PRO
+============================================================ */
+
+/* TABLETS & SMALL LAPTOPS */
+@media (max-width: 1100px) {
+  .content {
+    padding: 30px 35px;
+  }
+}
+
+/* iPad, iPad Pro, Tablets */
+@media (max-width: 900px) {
+  .container {
+    grid-template-columns: 1fr;
+  }
+
+  .sidebar {
+    border-bottom: 1px solid rgba(0,0,0,0.06);
+    padding-bottom: 20px;
+    margin-bottom: 25px;
+  }
+
+  .orderContent {
+    gap: 18px;
+  }
+
+  .imgs {
+    object-fit: cover;
+  }
+
+  .arrow {
+    right: 10px;
+  }
+}
+
+/* MOBILE */
+@media (max-width: 600px) {
+  .content {
+    padding: 20px 16px;
+  }
+
+  .filterRow {
+    gap: 8px;
+  }
+
+  .orderCard {
+    padding: 14px;
+  }
+
+  /* Order card becomes vertical */
+  .orderContent {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .imageWrap {
+    width: 100%;
+    height: 190px;
+    border-radius: 6px;
+  }
+
+  .arrow {
+    top: unset;
+    bottom: 12px;
+    transform: none;
+  }
+}
+
+/* VERY SMALL DEVICES */
+@media (max-width: 400px) {
+  .sectionTitle {
+    font-size: 18px;
+  }
+
+  .filterBtn {
+    padding: 6px 12px;
+    font-size: 0.8rem;
+  }
+
+  .title {
+    font-size: 0.95rem;
+  }
+}

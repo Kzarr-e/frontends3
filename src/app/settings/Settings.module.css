@@ -1,0 +1,258 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+:root {
+  --green: #082415;
+  --gold: #d9c169;
+  --muted: #777;
+  --border: rgba(0, 0, 0, 0.08);
+  --shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+}
+
+/* PAGE STRUCTURE */
+.pageWrap {
+  margin-top: 4%;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background: #fff;
+  font-family: "Open Sans", sans-serif;
+}
+
+/* ============================
+     LAYOUT
+============================ */
+.container {
+  display: grid;
+  grid-template-columns: 260px 1fr;
+  /* min-height: calc(100vh - 60px); */
+  width: 100%;
+}
+
+/* ============================
+     SIDEBAR (WRAPPER)
+============================ */
+.sidebar {
+  width: 260px;
+  background: #ffffff;
+  border-right: 1px solid #e5e5e5;
+  padding: 20px 0;
+}
+
+/* Sidebar nav */
+.nav {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  padding-left: 20px;
+}
+
+.navItem {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: #333;
+  padding: 8px 12px;
+  font-size: 15px;
+  text-decoration: none;
+  transition: 0.2s ease;
+}
+
+.navItem:hover {
+  background: rgba(0, 0, 0, 0.05);
+}
+
+.active {
+  color: var(--green);
+  font-weight: 600;
+  background: rgba(0, 0, 0, 0.05);
+}
+
+/* ============================
+     CONTENT
+============================ */
+.content {
+  padding: 40px 50px;
+}
+
+.sectionTitle {
+  font-family: "Montserrat", serif;
+  font-size: 20px;
+  font-weight: 500;
+  margin-bottom: 24px;
+  color: var(--green);
+}
+
+/* ============================
+     SETTINGS CARD
+============================ */
+.card {
+  display: flex;
+  justify-content: space-between;
+  background: #fff;
+
+  margin: 0 auto;
+  width: 100%;
+  max-width: 800px;
+
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow);
+  padding: 25px 30px;
+  border-radius: 8px;
+
+  transition: all 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.10);
+}
+
+.cardLeft {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  flex: 2;
+}
+
+.icon {
+  color: var(--green);
+  margin-top: 3px;
+}
+
+.cardTitle {
+  font-family: "Montserrat", serif;
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+
+.cardText {
+  font-size: 14px;
+  color: var(--muted);
+  line-height: 1.5;
+}
+
+/* RIGHT SIDE */
+.cardRight {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 6px;
+}
+
+.signOutBtn {
+  border: 1px solid var(--green);
+  background: #fff;
+  color: #000;
+  font-weight: 600;
+  padding: 8px 20px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: 0.25s ease;
+}
+
+.signOutBtn:hover {
+  background: var(--green);
+  color: white;
+}
+
+.note {
+  font-size: 12px;
+  color: var(--muted);
+}
+
+/* ============================
+     RESPONSIVE BREAKPOINTS
+============================ */
+
+/* LARGE TABLETS */
+@media (max-width: 1100px) {
+  .content {
+    padding: 30px 30px;
+  }
+
+  .card {
+    max-width: 90%;
+  }
+}
+
+/* TABLETS (Sidebar becomes horizontal nav) */
+@media (max-width: 900px) {
+  .container {
+    grid-template-columns: 1fr;
+  }
+
+  .sidebar {
+    width: 100%;
+    border-right: none;
+    border-bottom: 1px solid #e5e5e5;
+    padding: 10px 0;
+  }
+
+  .nav {
+    flex-direction: row;
+    justify-content: space-around;
+    padding-left: 0;
+  }
+
+  .navItem {
+    flex-direction: column;
+    font-size: 13px;
+    padding: 10px;
+  }
+
+  .content {
+    padding: 28px 22px;
+  }
+
+  .card {
+    flex-direction: column;
+    gap: 18px;
+    align-items: flex-start;
+    max-width: 95%;
+  }
+
+  .cardRight {
+    align-items: flex-start;
+  }
+}
+
+/* MOBILE */
+@media (max-width: 600px) {
+  .content {
+    padding: 20px 16px;
+  }
+
+  .navItem {
+    font-size: 12px;
+  }
+
+  .card {
+    padding: 20px;
+    max-width: 100%;
+  }
+
+  .signOutBtn {
+    width: 100%;
+    text-align: center;
+    padding: 10px;
+  }
+
+  .cardRight {
+    width: 100%;
+  }
+}
+
+/* SMALL MOBILE */
+@media (max-width: 400px) {
+  .sectionTitle {
+    font-size: 18px;
+  }
+
+  .navItem {
+    font-size: 11px;
+  }
+
+  .signOutBtn {
+    font-size: 13px;
+  }
+}

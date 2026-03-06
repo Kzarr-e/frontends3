@@ -1,0 +1,106 @@
+/* COOKIE BANNER - RESPONSIVE LIGHT THEME */
+.cookie-banner {
+  position: fixed;
+  bottom: 12px;
+  left: 50%;
+  transform: translateX(-50%);
+
+  width: calc(100% - 24px);
+  max-width: 520px;
+
+  background: #ffffff;
+  border: 1px solid #e5e5e5;
+  padding: 18px 18px;
+
+  border-radius: 0px;
+  box-shadow: 0 4px 22px rgba(0, 0, 0, 0.12);
+
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+
+  font-family: "Inter", system-ui;
+  color: #333;
+
+  animation: fadeUp 0.4s ease forwards;
+  z-index: 999999;
+}
+
+/* Animation */
+@keyframes fadeUp {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, 30px);
+  }
+  100% {
+    opacity: 1;
+    transform: translate(-50%, 0);
+  }
+}
+
+/* Text */
+.cookie-text {
+  font-size: 0.85rem;
+  line-height: 1.55;
+  color: #333;
+}
+
+/* Buttons */
+.cookie-buttons {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+/* Base button */
+.cookie-btn {
+  padding: 8px 18px;
+  border-radius: 0px;
+  font-size: 0.75rem;
+  cursor: pointer;
+  transition: 0.25s ease;
+  border: none;
+  min-width: 110px;
+}
+
+/* Accept button – Gold Brand Color */
+.cookie-btn.accept {
+  background: #EFBF04;
+  color: #000000;
+  font-weight: 200;
+}
+.cookie-btn.accept:hover {
+  background: #e1c766;
+}
+
+/* Reject button – Light Gray */
+.cookie-btn.reject {
+  background: #f2f2f2;
+  color: #555;
+  border: 1px solid #ddd;
+}
+.cookie-btn.reject:hover {
+  background: #e9e9e9;
+}
+
+/* ✅ EXTRA MOBILE OPTIMIZATION */
+@media (max-width: 480px) {
+  .cookie-banner {
+    padding: 16px 14px;
+    gap: 14px;
+  }
+
+  .cookie-text {
+    font-size: 0.8rem;
+  }
+
+  .cookie-buttons {
+    justify-content: space-between;
+  }
+
+  .cookie-btn {
+    flex: 1;
+    text-align: center;
+  }
+}

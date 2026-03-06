@@ -1,0 +1,132 @@
+*{
+  margin: 0%;
+  padding: 0%;
+
+}
+.hero-section {
+  position: relative;
+  width: 100%;
+  height: 94vh;
+  overflow: hidden;
+  margin-top: 60px;
+  background-color: #000;
+}
+
+.hero-video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.no-video {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 93vh;
+  color: #fff;
+}
+
+/* ============================
+   BANNER SECTION
+============================ */
+
+
+.banner-container {
+  margin-top: 10px;
+  width: 100%;
+  height: auto !important; 
+ 
+}
+
+
+.banner-containe4 {
+  margin-top: 10px;
+  width: 100%;
+  height: auto !important; 
+  
+ 
+}
+
+.banner-container1 {
+
+  width: 100%;
+  height: max-content !important; 
+  
+ 
+}
+.banner-container3{
+  width: 100%;
+  height: max-content;
+}
+
+.banner-1,
+.banner-2 {
+  height: max-content;
+}
+
+.stories-section {
+  width: 100%;
+  height: auto;
+  margin-top: 0px;
+}
+
+/* DEFAULT — Auto height */
+.banner-toggle {
+  width: 100%;
+  height: auto !important;      
+  margin: 0;
+  padding: 0;
+  overflow: visible;            
+}
+
+/* LARGE LAPTOPS */
+@media (max-width: 1366px) {
+  .banner-toggle {
+    height: auto !important;
+  }
+}
+
+/* 1480px */
+@media (max-width: 1480px) {
+  .banner-toggle {
+    height: auto !important;
+  }
+}
+
+/* 1024px */
+@media (max-width: 1024px) {
+  .banner-toggle {
+    height: auto !important;
+    min-height: auto;           /* Remove forced tall layout */
+  }
+}
+
+/* TABLETS 768px */
+@media (max-width: 768px) {
+  .banner-toggle {
+    height: auto !important;
+    margin: 0;
+    padding: 0;
+  }
+}
+
+/* MOBILE - Universal fix for all widths */
+@media (max-width: 480px) {
+  .banner-toggle {
+    width: 100vw;
+    height: auto !important;    /* SUPER IMPORTANT */
+    margin: 0;
+  }
+}
+
+
+@media (max-width: 430px), (max-width: 414px), (max-width: 412px), (max-width: 375px), (max-width: 360px) {
+  .banner-toggle {
+    width: 100vw;
+    height: auto !important;
+    margin: 0;
+  }
+}

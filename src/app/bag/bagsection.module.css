@@ -1,0 +1,201 @@
+.cartContainer { 
+  margin-top: 5%; 
+  width: 100vw;
+  height: 80vh;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 2rem;
+  padding: 2rem 5%;
+  background: #fff;
+}
+
+.left {
+  flex: 2;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  margin-right: 0%;
+}
+
+.cartItem {
+  display: flex;
+  width: 80%;
+  align-items: flex-start;
+  background: #fff;
+  border-radius: 0px;
+  padding: 1rem;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+  position: relative;
+}
+
+.itemImg img {
+  border-radius: 0px;
+  width: 200px;
+  height: 250px;
+  object-fit: cover;
+  border: 1px solid #ededed;
+  
+}
+
+.itemInfo {
+  margin-top: 5%;
+  flex: 1;
+  margin-left: 1rem;
+}
+
+.itemInfo h3 {
+  font-size: 1.1rem;
+  margin: 0;
+  text-transform: uppercase;
+}
+
+.itemInfo p {
+  margin: 0.2rem 0;
+  color: #555;
+}
+
+.price {
+  color: #000;
+  font-weight: 600;
+  margin-top: 0.5rem;
+}
+
+.oldPrice {
+  text-decoration: line-through;
+  color: #999;
+  margin-left: 5px;
+  font-weight: 400;
+}
+
+.details {
+  display: flex;
+  gap: 1.5rem;
+  margin: 0.8rem 0;
+}
+
+.details input {
+  width: 50px;
+  padding: 4px;
+  border: 1px solid #ccc;
+  border-radius: 0px;
+}
+
+.returnText {
+  color: #999;
+  font-size: 0.9rem;
+}
+
+.deleteBtn {
+  background: none;
+  border: none;
+  color: red;
+  font-size: 1.3rem;
+  cursor: pointer;
+  margin-left: auto;
+}
+
+.right {
+  flex: 1;
+  display: flex;
+  justify-content: flex-end;
+ 
+
+}
+
+.summaryBox {
+  background: #fff;
+  padding: 1.5rem;
+  border-radius: 0px;
+  box-shadow: 0 3px 15px rgba(0, 0, 0, 0.15);
+  width: 100%;
+ 
+}
+
+.summaryBox h3 {
+  margin-bottom: 1rem;
+}
+
+.row {
+  display: flex;
+  justify-content: space-between;
+  margin: 0.5rem 0;
+  font-size: 0.95rem;
+}
+
+.discountRow {
+  color: red;
+}
+
+.totalRow {
+  border-top: 1px solid #ddd;
+  padding-top: 0.6rem;
+  font-size: 1.1rem;
+}
+
+.promo {
+  display: flex;
+  margin-top: 1rem;
+  gap: 0.5rem;
+}
+
+.promo input {
+  flex: 1;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+}
+
+.promo button {
+  background: #000;
+  color: #fff;
+  padding: 8px 12px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.checkoutBtn {
+  width: 100%;
+  background: #000;
+  color: #fff;
+  border: none;
+  padding: 12px 0;
+  margin-top: 1rem;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 500;
+  font-size: 1rem;
+}
+.shareSection {
+  text-align: center;
+  margin-top: 2rem;
+}
+
+.shareBtn {
+  background: transparent;
+  border: 1.5px solid #222;
+  color: #222;
+  padding: 12px 52px;
+  border-radius: 0px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-weight: 500; 
+  margin-bottom: 5%;
+}
+
+.shareBtn:hover {
+  background: #222;
+  color: #fff;
+}
+
+@media (max-width: 900px) {
+  .cartContainer {
+    flex-direction: column;
+  }
+  .right {
+    width: 100%;
+    justify-content: center;
+  }
+}

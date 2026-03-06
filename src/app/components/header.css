@@ -1,0 +1,414 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+.header {
+  width: 100%;
+  height: 60px;
+  background-color: #ffffff;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-bottom: 1px solid #EFBF04;
+  transform: translateZ(0); /* isolate layer */
+}
+
+.header a,
+.header span,
+.header svg {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: geometricPrecision;
+}
+
+
+.container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 0 20px;
+  height: 100%;
+}
+
+/* ============================
+      NAVIGATION DESKTOP
+============================ */
+.nav-left,
+.nav-right {
+  flex: 1;
+  display: flex;
+  align-items: center;
+}
+.nav-left a,
+.nav-right a {
+  color: black;
+  text-decoration: none;
+  transition: color 0.3s;
+  /* font-family: 'Montserrat'; */
+    font-weight: 400 !important;
+   font-size: 0.7rem;
+   color: black; 
+   letter-spacing: 0.1em; 
+   
+}
+
+.nav-left a:hover,
+.nav-right a:hover {
+  color: #EFBF04;
+}
+
+.nav-left a {
+  margin-left: 40px;
+}
+
+.nav-right a {
+  margin-right: 40px;
+}
+
+.logo {
+  text-align: center;
+  flex-shrink: 0;
+}
+
+.logo-img {
+  width: 200px !important;
+  height: auto !important;
+}
+.nav-right {
+  display: flex;
+  align-items: center;
+  flex: 1;
+  justify-content: flex-end;
+}
+/* ============================
+     MOBILE EXCLUSIVE BUTTONS
+============================ */
+.mobile-search {
+  display: none;
+}
+
+.mobile-menu-btn {
+  display: none;
+  cursor: pointer;
+}
+
+/* ============================
+       MOBILE BREAKPOINT
+============================ */
+@media (max-width: 768px) {
+  .hide-mobile {
+    display: none !important;
+  }
+
+  .mobile-search {
+    display: block !important;
+  }
+
+  .mobile-menu-btn {
+    display: block !important;
+    margin-left: 12px;
+  }
+
+}
+
+/* ============================
+      MOBILE MENU OVERLAY
+============================ */
+.mobile-menu-overlay {
+  position: fixed;
+  top: 60px;
+  left: 0;
+  width: 100%;
+  height: calc(100dvh - 60px);
+  background-color: #EDEADE;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease;
+  padding-top: 40px;
+  z-index: 999;
+}
+
+.mobile-menu-overlay.open {
+  opacity: 1;
+  visibility: visible;
+}
+
+.mobile-nav-items {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 35px;
+  margin-top: 10px;
+}
+
+.mobile-nav-items a {
+  color: black;
+  font-size: 0.85rem;
+  font-family: 'Montserrat';
+}
+
+.mobile-lower-links {
+  margin-top: 45%;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  align-items: center;
+}
+
+.mobile-lower-links a {
+  color: white;
+  font-size: 0.85rem;
+}
+
+/* ============================
+      SEARCH OVERLAY
+============================ */
+.search-overlay {
+  position: fixed;
+  top: 60px;
+  width: 70%;
+  left: 15%;
+  height: calc(55vh - 60px);
+  background: #ffffffbd;
+  border-radius: 20px;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+  backdrop-filter: blur(5px);
+  opacity: 0;
+  visibility: hidden;
+  transition: 0.3s ease;
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 40px;
+}
+
+.search-overlay.open {
+  opacity: 1;
+  visibility: visible;
+}
+
+.search-box {
+  width: 70%;
+  display: flex;
+  gap: 20px;
+  align-items: center;
+}
+
+.search-input {
+  flex: 1;
+  padding: 12px 15px;
+  border-radius: 0;
+  border: 1px solid rgba(150, 150, 150, 0.786);
+  font-size: 1rem;
+  outline: none;
+  font-family: "Montserrat", serif;
+}
+
+.search-close {
+  background: #ffffffd4;
+  border: 1px solid rgba(150, 150, 150, 0.786);
+  width: 45px;
+  height: 45px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.search-close:hover svg {
+  color: #0C2B19;
+}
+
+/* ============================
+      SEARCH RESULTS LIST
+============================ */
+.search-results {
+  background: #fff;
+  width: 60%;
+  max-height: 550px;
+  overflow-y: auto;
+  border-radius: 2px;
+  border: 1px solid #c9c9c9a7;
+}
+
+.search-product-card {
+  display: flex;
+  width: 100%;
+  gap: 12px;
+  padding: 12px;
+  border-bottom: 1px solid #eee;
+  text-decoration: none;
+  color: #000;
+  background-color: #ffffff;
+  align-items: center;
+}
+
+.search-product-card img {
+  width: 80px;
+  height: 100px;
+  object-fit: cover;
+}
+
+.search-product-card p {
+  font-size: 15px;
+  text-transform: uppercase;
+}
+
+.search-product-card span {
+  font-size: 15px;
+  color: #777;
+}
+
+.search-badge {
+  padding: 6px 12px;
+  font-size: 11px;
+  letter-spacing: 1px;
+  font-family: "Montserrat";
+}
+
+.search-badge.exact {
+  color: green;
+}
+
+.search-badge.related {
+  color: #777;
+}
+
+.search-submit {
+  margin-top: 20px;
+  padding: 10px 50px;
+  background: #deba05df;
+  color: #000;
+  font-weight: 500;
+  font-family: "Open Sans", sans-serif;
+  font-size: 1rem;
+  border: 1px solid rgba(150, 150, 150, 0.786);
+  cursor: pointer;
+}
+
+.search-submit:hover {
+  background: #caa104;
+}
+
+/* ============================
+      DESKTOP SEARCH OVERLAY
+============================ */
+.desktop-search-overlay {
+  position: fixed;
+  top: -140px;
+  left: 0;
+  width: 100%;
+  height: 140px;
+  background: rgba(12, 43, 25, 0.97);
+  backdrop-filter: blur(6px);
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  transition: top 0.35s ease;
+  z-index: 99999;
+  opacity: 0;
+  visibility: hidden;
+}
+
+.desktop-search-overlay.open {
+  top: 60px;
+  opacity: 1;
+  visibility: visible;
+}
+
+.desktop-search-box {
+  width: 50%;
+  margin-top: 25px;
+  display: flex;
+  align-items: center;
+  background: #123522;
+  border: 1px solid #EFBF04;
+  border-radius: 6px;
+  padding: 10px 15px;
+}
+
+.desktop-search-input {
+  flex: 1;
+  background: transparent;
+  border: none;
+  outline: none;
+  padding: 12px 10px;
+  font-size: 1rem;
+  color: white;
+  font-family: "Montserrat", serif;
+}
+
+.desktop-search-close {
+  background: #EFBF04;
+  border: none;
+  padding: 8px 14px;
+  border-radius: 4px;
+  font-size: 1rem;
+  color: #0C2B19;
+  cursor: pointer;
+}
+
+.desktop-search-close:hover {
+  background: #b99f44;
+}
+
+/* =========================================
+        TABLET FIX (iPad / iPad Pro)
+========================================= */
+@media (max-width: 1024px) {
+  .hide-mobile {
+    display: none !important;
+  }
+
+  .mobile-search {
+    display: block !important;
+  }
+
+  .mobile-menu-btn {
+    display: block !important;
+  }
+
+  .desktop-search-overlay {
+    display: none !important;
+  }
+}
+
+/* =========================================
+        MOBILE FIXES
+========================================= */
+@media (max-width: 480px) {
+  .search-overlay {
+    width: 100vw;
+    left: 0;
+    height: 100vh;
+    border-radius: 0;
+  }
+
+  .search-box {
+    width: 90%;
+  }
+
+  .search-results {
+    width: 90%;
+  }
+}
+
+/* ============================
+      LOGIN BUTTON
+============================ */
+.login-btn {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  cursor: pointer;
+  transition: 0.3s ease;
+  font-family: "Montserrat";
+}
+
+.login-btn:hover {
+  color: #b49f3f;
+}

@@ -1,0 +1,58 @@
+.verify-container {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #fafafa;
+}
+
+.verify-box {
+  width: 360px;
+  background: #fff;
+  padding: 32px;
+  border-radius: 10px;
+  text-align: center;
+  box-shadow: 0 10px 30px rgba(0,0,0,.08);
+}
+
+.otp-row {
+  display: flex;
+  justify-content: space-between;
+  margin: 20px 0;
+}
+
+.otp-row input {
+  width: 45px;
+  height: 50px;
+  font-size: 20px;
+  text-align: center;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+}
+
+button {
+  width: 100%;
+  padding: 12px;
+  background: black;
+  color: white;
+  border-radius: 6px;
+  border: none;
+  margin-top: 10px;
+}
+
+.resend {
+  margin-top: 14px;
+  font-size: 14px;
+  cursor: pointer;
+  color: #555;
+}
+
+.error-text {
+  color: red;
+  margin-top: 8px;
+}
+
+.success-text {
+  color: green;
+  margin-top: 8px;
+}

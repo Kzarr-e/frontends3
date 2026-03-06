@@ -1,0 +1,199 @@
+/* ============================
+     CONTAINER
+============================ */
+.banner-containerid {
+  width: 100%;
+  height: auto;
+  display: block;
+  justify-content: center;
+
+}
+
+.banner-containerid h3 {
+  text-align: center;
+  color: black;
+  font-family: 'Montserrat';
+  font-size: 1.5rem;
+  letter-spacing: 0.9px;
+  text-transform: uppercase;
+  font-weight: 500;
+  margin-top: -0.8%;
+}
+
+.banner-containerid p {
+  text-align: center;
+  color: #EFBF04;
+  text-transform: lowercase;
+  font-size: 1.1rem;
+  font-family: 'Open Sans';
+  letter-spacing: 0.05em;
+  margin-top: -2px;
+}
+
+/* ============================
+     GRID WRAPPER (DESKTOP)
+============================ */
+.banner-wrapper {
+  width: 100%;
+  height: auto;
+  padding: 1%;
+  display: grid;
+  gap: 20px;
+
+  grid-template-areas:
+    "left-top center right-top"
+    "left-bottom center right-bottom";
+
+  grid-template-columns: 4fr 2.7fr 4fr;
+  grid-auto-rows: 360px;
+}
+
+/* ============================
+     GRID AREAS
+============================ */
+.banner-left-top { grid-area: left-top; }
+.banner-left-bottom { grid-area: left-bottom; }
+.banner-right-top { grid-area: right-top; }
+.banner-right-bottom { grid-area: right-bottom; }
+.banner-center { grid-area: center; }
+
+/* ============================
+     ITEM & IMAGE
+============================ */
+.banner-item {
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+  transition: .3s ease;
+}
+
+.banner-item:hover {
+  filter: brightness(1.1);
+}
+
+.banner-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+
+
+/* ===========================================
+     RESPONSIVE BREAKPOINTS
+=========================================== */
+
+/* 1600px + 1440px HD Screens */
+@media (max-width: 1600px) {
+  .banner-wrapper {
+    grid-auto-rows: 330px;
+  }
+}
+
+/* 1366px – Large Laptops */
+@media (max-width: 1366px) {
+  .banner-wrapper {
+    grid-auto-rows: 300px;
+  }
+}
+
+/* 1280px – Standard Laptops */
+@media (max-width: 1280px) {
+  .banner-wrapper {
+    grid-auto-rows: 280px;
+  }
+}
+
+/* 1024px – Tablets Landscape */
+@media (max-width: 1024px) {
+  .banner-wrapper {
+    grid-template-columns: 2fr 1fr;
+    grid-template-areas:
+      "left-top right-top"
+      "center center"
+      "left-bottom right-bottom";
+
+    grid-auto-rows: 260px 420px 260px;
+  }
+}
+
+/* 900px – Small Tablets */
+@media (max-width: 900px) {
+  .banner-wrapper {
+    grid-auto-rows: 240px;
+  }
+  .banner-text-wrapper{
+    margin-top: 5px;
+  }
+  
+}
+
+/* 768px – Tablet Portrait */
+@media (max-width: 768px) {
+  .banner-wrapper {
+    grid-auto-rows: 230px;
+      padding: 0px 12px;
+
+  }
+  
+ 
+}
+
+/* 600px – Mobile Tablets */
+@media (max-width: 600px) {
+  /* ⚠️ Mobile: Single-column stack (Option A) */
+  .banner-wrapper {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "left-top"
+      "center"
+      "right-top"
+      "left-bottom"
+      "right-bottom";
+
+    grid-auto-rows: 260px;
+  }
+  
+}
+
+/* 480px – Mobile */
+@media (max-width: 480px) {
+  .banner-wrapper {
+    grid-auto-rows: 220px;
+  }
+}
+
+/* 414px – iPhone 11 / 12 / 13 */
+@media (max-width: 414px) {
+  .banner-wrapper {
+    grid-auto-rows: 210px;
+  }
+}
+
+/* 390px – iPhone 12 Mini */
+@media (max-width: 390px) {
+  .banner-wrapper {
+    grid-auto-rows: 200px;
+  }
+}
+
+/* 375px – iPhone X / XR */
+@media (max-width: 375px) {
+  .banner-wrapper {
+    grid-auto-rows: 190px;
+  }
+}
+
+/* 360px – Pixel / Small Android */
+@media (max-width: 360px) {
+  .banner-wrapper {
+    grid-auto-rows: 180px;
+  }
+}
+
+/* 320px – Smallest Phones */
+@media (max-width: 320px) {
+  .banner-wrapper {
+    grid-auto-rows: 160px;
+  }
+}

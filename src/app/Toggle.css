@@ -1,0 +1,42 @@
+* {
+  letter-spacing: 0.03em;
+}
+
+/* WRAPPER */
+.banner-toggle-wrapper {
+  width: 100%;
+  height: auto !important;
+  margin-top: 1.05%;
+  padding: 0;
+  overflow: visible !important;
+}
+
+/* CONTENT SECTIONS */
+.banner_sections {
+  width: 100%;
+  height: auto !important;
+  margin-top: 0;
+  padding: 0;
+  overflow: visible !important;
+}
+
+/* LAPTOP FIX */
+@media (max-width: 1366px) {
+  .banner-toggle-wrapper {
+    height: auto !important;  /* REMOVE 245vh */
+    margin-top: 0;
+  }
+}
+
+/* MOBILE FIX */
+@media (max-width: 480px) {
+  .banner-toggle-wrapper {
+    height: auto !important;  /* REMOVE 200vh */
+    margin-top: 0;
+  }
+
+  .banner_sections {
+    height: auto !important;
+    width: 100%;
+  }
+}

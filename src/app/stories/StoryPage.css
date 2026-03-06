@@ -1,0 +1,207 @@
+/* ======================================================
+   ROOT FALLBACKS (Admin overrides via inline CSS vars)
+====================================================== */
+:root {
+  --title-font: "Playfair Display", serif;
+  --body-font: "Inter", sans-serif;
+
+  --title-size: 32pt;
+  --body-size: 12pt;
+
+  --title-color: #111111;
+  --body-color: #222222;
+
+  --line-height: 1.75;
+
+  --paragraph-spacing: 20px;
+  --section-spacing: 48px;
+
+  --text-align: left;
+  --max-width: 1060px;
+
+  --story-bg: #ffffff;
+}
+
+/* ======================================================
+   PAGE
+====================================================== */
+.story-page {
+  margin-top: 60px;
+  width: 100%;
+  padding-bottom: 80px;
+  background: var(--story-bg);
+}
+
+/* ======================================================
+   HERO / COVER
+====================================================== */
+.story-hero {
+  width: 100%;
+  height: 94vh;
+  overflow: hidden;
+  position: relative;
+}
+
+.story-hero img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* ======================================================
+   CONTENT CARD
+====================================================== */
+.story-container {
+  max-width: var(--max-width);
+  margin: -200px auto 0;
+  background: var(--story-bg);
+  padding: 56px 72px;
+  border-radius: 8px;
+  position: relative;
+  z-index: 2;
+
+  box-shadow: 0 40px 80px rgba(0, 0, 0, 0.08);
+}
+
+/* ======================================================
+   TITLE
+====================================================== */
+.story-title {
+  font-family: var(--title-font);
+  font-size: var(--title-size);
+  color: var(--title-color);
+  line-height: 1.15;
+  margin-bottom: 16px;
+  text-align: var(--text-align);
+}
+
+/* ======================================================
+   SUBTITLE
+====================================================== */
+.story-subtitle {
+  font-family: var(--body-font);
+  font-size: 13pt;
+  color: #555;
+  margin-bottom: 36px;
+  text-align: var(--text-align);
+}
+
+/* ======================================================
+   RICH CONTENT
+====================================================== */
+.story-content {
+  font-family: var(--body-font);
+  font-size: var(--body-size);
+  color: var(--body-color);
+  line-height: var(--line-height);
+  text-align: var(--text-align);
+}
+
+/* Paragraphs */
+.story-content p {
+  margin-bottom: var(--paragraph-spacing);
+}
+
+/* Headings */
+.story-content h2 {
+  font-size: 18pt;
+  margin-top: var(--section-spacing);
+  margin-bottom: 16px;
+  color: var(--title-color);
+}
+
+.story-content h3 {
+  font-size: 15pt;
+  margin-top: calc(var(--section-spacing) - 12px);
+  margin-bottom: 12px;
+  color: var(--title-color);
+}
+
+/* Lists */
+.story-content ul,
+.story-content ol {
+  margin: 16px 0 24px 24px;
+}
+
+.story-content li {
+  margin-bottom: 8px;
+}
+
+/* Quotes */
+.story-content blockquote {
+  margin: 32px 0;
+  padding-left: 24px;
+  border-left: 4px solid #e5e5e5;
+  font-style: italic;
+  color: #444;
+}
+
+/* Inline highlights */
+.story-content mark {
+  background: #e8f1ff;
+  color: #111;
+  padding: 0 4px;
+  border-radius: 4px;
+}
+
+/* FORCE readable text (fix white text bug) */
+.story-content span,
+.story-content font,
+.story-content strong,
+.story-content em {
+  color: inherit !important;
+}
+
+/* Images inside content */
+.story-content img {
+  width: 100%;
+  border-radius: 18px;
+  margin: 36px 0;
+}
+
+/* ======================================================
+   GALLERY (BOTTOM IMAGES)
+====================================================== */
+.story-gallery {
+  max-width: 1200px;
+
+  margin: 72px auto 0;
+  padding: 0 24px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 24px;
+}
+
+.story-gallery img {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+  border-radius: 20px;
+}
+
+/* ======================================================
+   MOBILE
+====================================================== */
+@media (max-width: 768px) {
+  .story-hero {
+    height: 50vh;
+  }
+
+  .story-container {
+    margin-top: -80px;
+    padding: 32px 20px;
+    border-radius: 20px;
+  }
+
+  .story-title {
+    font-size: 24pt;
+  }
+
+  .story-subtitle {
+    font-size: 12pt;
+  }
+
+  .story-content {
+    font-size: 11.5pt;
+  }
+}

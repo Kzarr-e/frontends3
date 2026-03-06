@@ -1,0 +1,715 @@
+/* ====== Product page styles (pixel-lean) ====== */
+:root {
+  --green: #082415;
+  --gold: #EFBF04;
+  --muted: #888;
+  --max-width: 1200px;
+}
+
+/* =====================================
+   PAGE CONTAINER
+===================================== */
+.product-page {
+  padding: 60px 0px;
+  width: 100vw;
+  margin: 0 auto;
+  color: #111;
+  height: max-content;
+}
+/* ✅ Luxury Popup */
+.luxury-popup-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+}
+
+.luxury-popup {
+  background: #ffffff;
+  color: #000000;
+  padding: 38px 100px;
+  border-radius: 0;
+  font-size: 14px;
+  letter-spacing: 1px;
+  animation: scaleFade 0.25s ease;
+  text-align: center;
+}
+
+.luxury-popup.success {
+  border: 1px solid #cdcdcd;
+  color: #000000;
+  font-family: 'Montserrat';
+  text-transform: uppercase;
+}
+
+.luxury-popup.error {
+  border: 1px solid red;
+  color: rgb(255, 255, 255);
+  text-transform: uppercase;
+}
+
+@keyframes scaleFade {
+  from {
+    transform: scale(0.85);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+/* =====================================
+   TOP GRID
+===================================== */
+.product-top {
+  display: grid;
+  grid-template-columns: 1fr 660px;
+  gap: 0px;
+  align-items: center;
+  width: 100vw;
+  height: fit-content;
+  background-color: #f7f7f7;
+}
+
+/* =====================================
+   LEFT GALLERY COLUMN
+===================================== */
+.gallery-col {
+  width: 100%;
+  display: flex;
+  justify-content: left;
+  text-align: left;
+}
+
+/* =====================================
+   ✅ LUXURY IMAGE SCROLL SYSTEM
+===================================== */
+.luxury-scroll {
+  position: relative;
+  width: 100%;
+  height: 95vh;
+  overflow: hidden;
+  cursor: pointer;
+  background: #f5f5f5;
+  scroll-behavior: smooth;
+}
+
+/* ✅ UPDATED: SMALL → MAX ANIMATION */
+.luxury-img {
+  width: 95%;
+  height: 100vh;
+  object-fit: cover;
+  animation: cinematicFade 0.85s cubic-bezier(0, 1.06, 1, -0.01) forwards;
+  will-change: opacity, transform;
+}
+/* ================= IMAGE ARROWS ================= */
+.main-image {
+  position: relative;
+  overflow: hidden;
+}
+
+.img-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 40px;
+  height: 30px;
+  border-radius: 0%;
+  border: none;
+  background: rgba(0, 0, 0, 0.636);
+  color: #fffffff4;
+  font-size: 28px;
+  line-height: 1;
+  cursor: pointer;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.25s ease, transform 0.2s ease;
+}
+
+.img-arrow:hover {
+  background: rgba(0, 0, 0, 0.8);
+  transform: translateY(-50%) scale(1.05);
+}
+
+.img-arrow.left {
+  left: 12px;
+}
+
+.img-arrow.right {
+  right: 52px;
+}
+
+/* Mobile – slightly smaller */
+@media (max-width: 768px) {
+  .img-arrow {
+    width: 36px;
+    height: 36px;
+    font-size: 22px;
+  }
+}
+
+@media (max-width: 768px) {
+  .img-arrow {
+    width: 40px;
+    height: 40px;
+    font-size: 22px;
+  }
+}
+
+
+/* ✅ UPDATED: SMALL → NORMAL (NOT BIG → NORMAL) */
+@keyframes cinematicFade {
+  0% {
+    opacity: 0.2;
+    transform: scale(0.92); /* ✅ START SMALL */
+    filter: blur(1.5px);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1); /* ✅ END AT FULL */
+    filter: blur(0px);
+  }
+}
+
+/* LUXURY HOVER ZOOM */
+.luxury-scroll:hover .luxury-img {
+  transform: scale(1.03);
+  transition: transform 1s ease-in-out;
+}
+
+/* =====================================
+   ✅ LUXURY GOLD PROGRESS LINE (MOVED RIGHT)
+===================================== */
+.luxury-line {
+  position: absolute;
+  bottom: 52%;
+  right: 22px; /* ✅ MOVED TO RIGHT */
+  left: auto; /* ✅ REMOVED CENTER ALIGN */
+  transform: translateY(-50%); /* ✅ RESET TRANSFORM */
+  width: 3px;
+  height: 40px;
+  background: rgb(255, 255, 255);
+  overflow: hidden;
+}
+
+.luxury-line-fill {
+  height: 100%;
+  background: linear-gradient(180deg, #000000, #000000);
+  transition: height 0.6s ease;
+}
+
+/* =====================================
+   RIGHT INFO COLUMN
+===================================== */
+.info-col {
+  width: 100vw;
+  height: fit-content;
+  overflow-y: hidden;
+}
+
+.product-title {
+  margin-top: 0%;
+
+  font-size: 1.2rem;
+  font-weight: 500;
+  margin-bottom: 6px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-family: "Montserrat";
+}
+
+.subtitle {
+  color: var(--muted);
+  font-size: 0.9rem;
+  margin-bottom: 15px; 
+  width: 600px;
+  font-family: "Open Sans";
+}
+
+/* =====================================
+   PRICE
+===================================== */
+.price-current {
+  margin-top: 2.5%;
+  font-size: 25px;
+  font-weight: 400;
+  font-family: "Montserrat";
+}
+
+.price-old {
+  color: var(--muted);
+  text-decoration: line-through;
+}
+
+.price-save {
+  font-size: 13px;
+  color: var(--muted);
+}
+
+
+
+
+/* ================= SIZE SELECTOR ================= */
+.variant-group{
+  margin-top: 1%;
+  margin-left: 0.5%;
+
+}
+
+.variant-label {
+  font-family: "Montserrat", sans-serif;
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #000000;
+  margin-bottom: 8px;
+}
+
+.variant-options {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+/* SIZE BUTTON */
+.variant-btn {
+  min-width: 44px;
+  height: 36px;
+  padding: 0 14px;
+  background-color: transparent;
+  border: 1px solid #cfcfcf;
+  font-family: "Montserrat", sans-serif;
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #000;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+/* Hover */
+.variant-btn:hover {
+  border-color: #0c2b19;
+}
+
+/* Active (Selected) */
+.variant-btn.active {
+  background-color: #ffffff;
+  color: #000000;
+  border-color: #0c2b19;
+}
+
+/* Disabled (out of stock size – optional) */
+.variant-btn.disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+/* ================= MOBILE ================= */
+@media (max-width: 480px) {
+  .variant-btn {
+    height: 34px;
+    font-size: 0.65rem;
+    padding: 0 12px;
+  }
+}
+
+.variant{
+  margin-top: 1%;
+  margin-left: 0.5%;
+}
+/* ================= COLOR VARIANTS ================= */
+.variant-group {
+  margin-top: 20px;
+}
+.color-options {
+  display: flex;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+/* COLOR SWATCH */
+.color-swatch {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+
+  background-color: var(--swatch-color);
+  border: 1px solid rgba(0, 0, 0, 0.15);
+
+  cursor: pointer;
+  position: relative;
+
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+/* INNER DEPTH (LUXURY FEEL) */
+.color-swatch::before {
+  content: "";
+  position: absolute;
+  inset: 3px;
+  border-radius: 50%;
+  background: linear-gradient(
+    to bottom right,
+    rgba(255, 255, 255, 0.35),
+    rgba(0, 0, 0, 0.15)
+  );
+  opacity: 0.35;
+  pointer-events: none;
+}
+
+/* HOVER – LIFT */
+.color-swatch:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.18);
+}
+/* SELECTED – STRONG RING */
+.color-swatch.active {
+  box-shadow:
+    0 0 0 2px #fff,
+    0 0 0 4px #0c2b19,
+    0 6px 14px rgba(0, 0, 0, 0.25);
+  transform: scale(1.05);
+}
+/* WHITE / LIGHT COLORS FIX */
+.color-swatch.light {
+  border: 1px solid #aaa;
+}
+
+/* DISABLED COLOR */
+.color-swatch.disabled {
+  opacity: 0.25;
+  filter: grayscale(100%);
+  cursor: not-allowed;
+  box-shadow: none;
+  transform: none;
+}
+
+/* PREVENT HOVER EFFECT */
+.color-swatch.disabled:hover {
+  transform: none;
+  box-shadow: none;
+}
+
+/* =====================================
+   ACTION BUTTONS
+===================================== */
+.actions {
+  display: block;
+  gap: 2px;
+}
+
+.btn {
+  padding: 10px 24px;
+  cursor: pointer;
+  margin-top: 2%;
+  
+}
+
+.btn.primary {
+  background: black;
+  padding: 10px 60px;
+  color: white;
+  font-weight: 700;
+}
+
+.btn.outline {
+  border: 1px solid #ddd;
+  background: #fff; 
+  margin-left: 2%;
+  color: black;
+}
+
+/* =====================================
+   ACCORDION
+===================================== */
+.accordion {
+  margin-top: 15px;
+  border-top: 1px solid #eee;
+}
+
+.acc-toggle {
+  width: 100%;
+  padding: 12px 0;
+  border: none;
+  background: transparent;
+  display: flex;
+  justify-content: space-between;
+  cursor: pointer;
+}
+
+.acc-body {
+  font-size: 14px;
+  color: var(--muted);
+}
+
+/* =====================================
+   SIMILAR PRODUCTS
+===================================== */
+.similar-section {
+  margin-top: 0px;
+  width: 100vw;
+  background-color: #ffffff;
+}
+.similar-section h2 {
+  margin-top: 2%;
+  margin-left: 3%;
+  margin-bottom: 2%;
+  font-family: "Montserrat";
+  font-size: 1.3rem;
+  letter-spacing: 0.2em;
+  font-weight: 550;
+  text-transform: uppercase;
+}
+.similar-grid {
+  width: 95vw;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 45px;
+  margin-left: 2.5%;
+}
+
+.card {
+  width: 100%;
+  height: 500px;
+}
+
+.card-image img {
+  width: 100%;
+  height: 460px;
+  object-fit: cover;
+}
+.card-title {
+  margin-top: 2px;
+  font-size: 0.95rem;
+  font-family: "open sans";
+  font-style: italic;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  text-align: center;
+  color: #000000;
+}
+.card-price {
+  margin-top: 3px;
+  font-size: 1.1rem;
+  font-family: "Montserrat";
+  font-weight: 600;
+  text-align: center;
+  letter-spacing: 0.1em;
+  color: #000000;
+}
+
+@media (max-width: 1024px) {
+  .product-top {
+    grid-template-columns: 1fr 1fr; /* Balanced luxury split */
+  }
+
+  .luxury-scroll {
+    height: 75vh;
+  }
+
+  .luxury-img {
+    width: 100%;
+  }
+
+  .info-col {
+    padding: 50px 40px;
+  }
+
+  .product-title {
+    font-size: 1.1rem;
+  }
+
+  .price-current {
+    font-size: 22px;
+  }
+
+  .btn.primary {
+    padding: 10px 45px;
+  }
+
+  /* ✅ Similar Products Tablet */
+  .similar-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 35px;
+  }
+
+  .card {
+    height: auto;
+  }
+
+  .card-image img {
+    height: 360px;
+  }
+}
+
+/* ===============================
+   ✅ MOBILE LUXURY STACK (≤768px)
+================================ */
+@media (max-width: 768px) {
+  .product-page {
+    padding: 30px 0px;
+  }
+
+  .product-top {
+    grid-template-columns: 1fr; /* ✅ Full vertical luxury stack */
+  }
+
+  .gallery-col {
+    justify-content: center;
+  }
+
+  .luxury-scroll {
+    height: 65vh;
+  }
+
+  .luxury-img {
+    width: 100%;
+  }
+
+  .luxury-line {
+    display: none; /* ✅ Clean mobile appearance */
+  }
+
+  .info-col {
+    width: 100%;
+    padding: 35px 25px;
+  }
+
+  .product-title {
+    font-size: 1rem;
+  }
+
+  .subtitle {
+    font-size: 0.85rem;
+  }
+
+  .price-current {
+    font-size: 20px;
+  }
+
+  .color-box {
+    width: 20px;
+    height: 20px;
+  }
+
+  .size-btn {
+    padding: 7px 12px;
+    font-size: 0.85rem;
+  }
+
+  .btn.primary {
+    width: 100%;
+    padding: 12px;
+    margin-top: 10px;
+  }
+
+  .btn.outline {
+    width: 100%;
+  }
+
+  .accordion {
+    margin-top: 20px;
+  }
+
+  /* ✅ Similar Products Mobile */
+  .similar-section h2 {
+    font-size: 1.1rem;
+    margin-left: 5%;
+  }
+
+  .similar-grid {
+    grid-template-columns: repeat(2, 1fr); 
+    gap: 20px;
+    width: 100vw;
+    padding: 3%;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .card-image img {
+    height: 340px;
+  }
+
+  .card-title {
+    font-size: 0.85rem;
+  }
+
+  .card-price {
+    font-size: 1rem;
+  }
+}
+
+/* ===============================
+   ✅ EXTRA SMALL PHONES (≤480px)
+================================ */
+@media (max-width: 480px) {
+  .luxury-scroll {
+    width: 90vw;
+    height: 93vh;
+    margin-top: 30px;
+  }
+
+  .luxury-img {
+    width: 100%;
+  }
+
+  .info-col {
+    padding: 28px 28px;
+    
+  }
+
+  .product-title {
+    font-size: 0.95rem;
+    letter-spacing: 0.04em;
+  } 
+
+
+  .btn.outline {
+    margin-left: 0%;
+    margin-top: 13px;
+  }
+
+  .price-current {
+    font-size: 19px;
+  }
+
+  .sizes {
+    flex-wrap: wrap;
+    gap: 10px; 
+    color: black;
+  }
+
+  .btn.primary {
+    font-size: 0.9rem;
+  }
+ .similar-section h2 {
+    font-size: 1rem;
+    
+    margin-top: 4%;
+    margin-bottom: 2%;
+    text-align: center;
+  }
+  .similar-grid {
+    grid-template-columns: repeat(2, 1fr); 
+    gap: 20px;
+    width: 100vw;
+    padding: 3%;
+    gap: 25px;
+  }
+
+  .card-image img {
+    object-fit: cover;
+    height: 300px;
+  }
+}

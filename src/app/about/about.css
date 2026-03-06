@@ -1,0 +1,138 @@
+/* ========== GLOBAL CONTAINER ========== */
+.about-container {
+  margin-top: 0px;
+  background-color: #fff;
+  color: #222;
+  font-family: "Times New Roman", serif;
+  line-height: 1.7;
+  overflow-x: hidden;
+}
+
+/* ========== HERO SECTION ========== */
+.hero-section {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.hero-video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* ========== TYPOGRAPHY / CENTER CONTENT ========== */
+.about-content {
+  max-width: 900px;
+  margin: 90px auto;
+  padding: 0 20px;
+  text-align: center;
+}
+
+.about-content .quote {
+  font-size: 0.95rem;
+  color: #444;
+  margin-bottom: 50px;
+}
+
+.about-content .quote span {
+  color: #d3bb42;
+  font-weight: 600;
+}
+
+.about-content .intro {
+  font-size: 1.05rem;
+  color: #111;
+
+}
+
+.about-content .text-block {
+  font-size: 0.95rem;
+  color: #333;
+}
+
+.about-content span {
+  color: #a38930;
+}
+
+/* ========== IMAGE + TEXT BLOCKS (ALTERNATING) ========== */
+.image-grid {
+  width: 90%;
+  margin: 120px auto;
+}
+
+.image-text {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 60px;
+  margin-bottom: 140px;
+}
+
+/* EVEN BLOCK → IMAGE LEFT */
+.image-text:nth-child(even) {
+  flex-direction: row-reverse;
+}
+
+/* IMAGE */
+.image-text img {
+  width: 480px;
+  height: 280px;
+  object-fit: cover;
+}
+
+/* TEXT */
+.image-text p {
+  flex: 1;
+  font-size: 0.95rem;
+  color: #333;
+  line-height: 1.8;
+}
+
+.image-text span {
+  color: #a38930;
+  font-weight: 600;
+}
+
+/* ========== FOOTER SECTION ========== */
+.about-footer {
+  text-align: center;
+  padding: 120px 20px 140px;
+}
+
+.about-footer p {
+  font-size: 0.95rem;
+  color: #333;
+  max-width: 800px;
+  margin: 0 auto 30px;
+}
+
+.about-footer h3 {
+  font-size: 1.2rem;
+  color: #d3bb42;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+}
+
+/* ========== RESPONSIVE ========== */
+@media (max-width: 900px) {
+  .image-text {
+    flex-direction: column;
+    text-align: center;
+    gap: 30px;
+  }
+
+  .image-text:nth-child(even) {
+    flex-direction: column;
+  }
+
+  .image-text img {
+    width: 100%;
+    height: auto;
+  }
+
+  .about-content {
+    margin: 60px auto;
+  }
+}

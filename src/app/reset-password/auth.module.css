@@ -1,0 +1,125 @@
+/* ================================
+   ✅ AUTH PAGES – LUXURY THEME
+   KZARRĒ (Black & White)
+================================ */
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+.authWrapper {
+  min-height: 100vh;
+  background: #000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  font-family: "Inter", system-ui, sans-serif;
+}
+
+.authCard {
+  width: 100%;
+  max-width: 420px;
+  background: #fff;
+  border-radius: 16px;
+  padding: 36px 32px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.45);
+  text-align: center;
+}
+
+/* ✅ Brand / Title */
+
+.authTitle {
+  font-size: 26px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  margin-bottom: 8px;
+  color: #000;
+}
+
+.authSub {
+  font-size: 13px;
+  color: #777;
+  margin-bottom: 28px;
+}
+
+/* ✅ Input Fields */
+
+.authField {
+  width: 100%;
+  padding: 14px 14px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-size: 14px;
+  outline: none;
+  margin-bottom: 16px;
+  transition: 0.2s ease;
+}
+
+.authField:focus {
+  border-color: #000;
+}
+
+/* ✅ Buttons */
+
+.authBtn {
+  width: 100%;
+  padding: 14px;
+  border-radius: 8px;
+  background: #000;
+  color: #fff;
+  border: none;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  cursor: pointer;
+  transition: 0.25s ease;
+}
+
+.authBtn:hover {
+  background: #111;
+}
+
+/* ✅ Message */
+
+.authMessage {
+  margin-top: 16px;
+  font-size: 14px;
+  color: #000;
+}
+
+/* ✅ Success Message */
+.authSuccess {
+  color: #0a8f38;
+  font-weight: 600;
+}
+
+/* ✅ Error Message */
+.authError {
+  color: #d40000;
+  font-weight: 600;
+}
+
+/* ✅ Footer Links */
+
+.authLinks {
+  margin-top: 22px;
+  font-size: 13px;
+}
+
+.authLinks a {
+  color: #000;
+  text-decoration: underline;
+  font-weight: 500;
+}
+
+.authLinks a:hover {
+  opacity: 0.7;
+}
+
+/* ✅ Responsive */
+
+@media (max-width: 480px) {
+  .authCard {
+    padding: 28px 22px;
+  }
+
+  .authTitle {
+    font-size: 22px;
+  }
+}

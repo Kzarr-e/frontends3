@@ -1,0 +1,141 @@
+.sidebar {
+  width: 240px;
+  padding: 20px 0;
+  background: #ffffff;
+ 
+  transition: all 0.3s ease;
+}
+
+.nav {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  padding-left: 20px;
+}
+
+.navItem {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px;
+  font-size: 0.9rem;
+  color: #333;
+  text-decoration: none;
+  border-radius: 0px;
+  transition: 0.25s ease;
+}
+
+.navItem:hover {
+  background: #f3f3f3;
+}
+
+.active {
+  background: #f3f3f3;
+  color: rgb(0, 0, 0) !important;
+}
+
+/* ===========================================
+   TABLETS (iPad, small laptops)
+=========================================== */
+  
+@media (max-width: 1024px) {
+  .sidebar {
+    width: 100%;
+    border-right: none;
+    border-bottom: 1px solid #e5e5e5;
+    padding: 10px 0;
+  }
+
+  .nav {
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+    padding-left: 0;
+    gap: 0;
+  }
+
+  .navItem {
+    flex-direction: column;
+    padding: 15px 6px;
+    font-size: 0.75rem;
+    border-radius: 4px;
+  }
+}
+
+@media (max-width: 992px) {
+ .sidebar {
+    width: 100%;
+    border-right: none;
+    border-bottom: 1px solid #e5e5e5;
+    padding: 10px 0;
+  }
+
+  .nav {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-around;
+    padding-left: 0;
+    gap: 0;
+  }
+
+  .navItem {
+    flex-direction: column;
+    padding: 8px 6px;
+    font-size: 0.75rem;
+    border-radius: 4px;
+  }
+
+  .navItem {
+    font-size: 0.85rem;
+    padding: 8px;
+  }
+}
+
+/* ===========================================
+   MOBILE & SMALL TABLETS
+   → Sidebar becomes top horizontal menu
+=========================================== */
+@media (max-width: 768px) {
+  .sidebar {
+    width: 100%;
+    border-right: none;
+    border-bottom: 1px solid #e5e5e5;
+    padding: 10px 0;
+  }
+
+  .nav {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-around;
+    padding-left: 0;
+    gap: 0;
+  }
+
+  .navItem {
+    flex-direction: column;
+    padding: 8px 6px;
+    font-size: 0.75rem;
+    border-radius: 4px;
+  }
+
+  .navItem svg {
+    width: 18px;
+    height: 18px;
+  }
+}
+
+/* ===========================================
+   SMALL MOBILE (iPhone SE, Android small)
+=========================================== */
+@media (max-width: 480px) {
+  .navItem {
+    margin-top: 10%;
+    font-size: 0.7rem;
+    padding: 6px 4px;
+  }
+
+  .navItem svg {
+    width: 16px;
+    height: 16px;
+  }
+}
