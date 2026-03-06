@@ -30,6 +30,7 @@ jobs:
         with:
           args: --delete
         env:
+          NEXT_PUBLIC_BACKEND_API_URL: https://api.kzarre.com
           AWS_S3_BUCKET: ${{ secrets.S3_BUCKET_NAME }}
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
