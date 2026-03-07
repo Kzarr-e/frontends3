@@ -148,7 +148,7 @@ export default function OrdersPage() {
               return (
                 <Link
                   key={order._id}
-                  href={`/orders/${order.orderId}`}
+                 href={`/orders?id=${order.orderId}`}
                   className={styles.orderCard}
                 >
                   <div className={styles.statusRow}>

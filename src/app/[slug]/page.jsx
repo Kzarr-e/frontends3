@@ -22,6 +22,7 @@ export async function generateStaticParams() {
   }));
 }
 
-export default function Page({ params }) {
-  return <CmsPage slug={params.slug} />;
+export default async function Page({ params }) {
+  const { slug } = await params;   // ✅ FIX
+  return <CmsPage slug={slug} />;
 }

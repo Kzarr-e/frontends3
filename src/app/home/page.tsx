@@ -83,7 +83,7 @@ export default function Home() {
             muted
             playsInline
             preload="metadata"        // ✅ HUGE FIX
-            poster="/video-poster.jpg" // ✅ prevents blank screen
+            poster="/placeholder.png" // ✅ prevents blank screen
             className="hero-video"
           >
             <source src={videoUrl} type="video/mp4" />

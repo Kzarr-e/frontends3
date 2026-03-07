@@ -2,8 +2,8 @@
 
 import React, { useEffect, useState, useMemo } from "react";
 import Image from "next/image";
-import { usePathname } from "next/navigation";
-import { User, Package, Settings, ShoppingCart } from "lucide-react";
+// import { usePathname } from "next/navigation";
+// import { User, Package, Settings, ShoppingCart } from "lucide-react";
 import styles from "./OrderDetails.module.css";
 import PageLayout from "../components/PageLayout";
 import SidebarNav from "../components/SidebarNav";
@@ -62,6 +62,7 @@ interface OrderReturn {
 interface Order {
     orderId: string;
     createdAt: string;
+    id:string;
 
     status:
     | "pending"
@@ -90,16 +91,7 @@ interface Order {
    ✅ COMPONENT
 ============================ */
 
-export default function OrderDetailsPage() {
-
-    const pathname = usePathname();
-
-    const orderId = useMemo(() => {
-        if (!pathname) return null;
-        const parts = pathname.replace(/\/$/, "").split("/");
-        return parts[parts.length - 1];
-    }, [pathname]);
-
+export default function OrderDetailsPage({ id }: { id: string }) {
 
     const [order, setOrder] = useState<Order | null>(null);
 
@@ -113,11 +105,11 @@ export default function OrderDetailsPage() {
        ✅ FETCH SINGLE ORDER
     ======================= */
     useEffect(() => {
-        if (!orderId) return;
+        if (!id) return;
 
         async function fetchOrder() {
             try {
-                const res = await fetch(`${API_URL}/api/orders/${orderId}`, {
+                const res = await fetch(`${API_URL}/api/orders/${id}`, {
                     credentials: "include",
                 });
 
@@ -133,15 +125,15 @@ export default function OrderDetailsPage() {
         }
 
         fetchOrder();
-    }, [orderId, API_URL]);
+    }, [id, API_URL]);
 
     /* =======================
        ✅ RELOAD ORDER
     ======================= */
     async function reloadOrder() {
-        if (!orderId) return;
+        if (!id) return;
         try {
-            const res = await fetch(`${API_URL}/api/orders/${orderId}`, {
+            const res = await fetch(`${API_URL}/api/orders/${id}`, {
                 credentials: "include",
             });
             const data = await res.json();
@@ -154,7 +146,7 @@ export default function OrderDetailsPage() {
        ✅ CANCEL / REFUND
     ======================= */
     const handleCancelOrder = async () => {
-        if (!order || !orderId) return;
+        if (!order || !id) return;
 
         const isPaidOnline =
             order.status === "paid" && order.paymentMethod === "ONLINE";
@@ -171,7 +163,7 @@ export default function OrderDetailsPage() {
 
             const endpoint = isPaidOnline
                 ? `${API_URL}/api/checkout/refund`
-                : `${API_URL}/api/orders/cancel/${order.orderId}`;
+                : `${API_URL}/api/orders/cancel/${order.id}`;
 
             const res = await fetch(endpoint, {
                 method: "PUT",

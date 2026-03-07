@@ -10,9 +10,9 @@ import { Forward } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import "./product.css";
-import { addToCart } from "../utils/addToCart";
+import { addToCart } from "../../utils/addToCart";
 import { IoChevronBack, IoChevronForward } from "react-icons/io5";
-import Pagelayout from "../components/PageLayout";
+import Pagelayout from "../../components/PageLayout";
 /* ==================== HELPERS ==================== */
 function formatPrice(num) {
   return Number(num).toLocaleString("en-US");
@@ -27,14 +27,7 @@ async function safeJson(res) {
   }
 }
 
-export default function ProductPage() {
-  const pathname = usePathname();
-
-  const id = useMemo(() => {
-    if (!pathname) return null;
-    const p = pathname.replace(/\/$/, "").split("/");
-    return p[p.length - 1];
-  }, [pathname]);
+export default function ProductPage({ id }) {
 
   /* ================= STATE ================= */
   const [product, setProduct] = useState(null);
@@ -465,10 +458,10 @@ export default function ProductPage() {
             </div>
             <div className="variant-group">
               <button
-               onClick={() => {
-    navigator.clipboard.writeText(window.location.href);
-    alert("Product link copied!");
-  }}
+                onClick={() => {
+                  navigator.clipboard.writeText(window.location.href);
+                  alert("Product link copied!");
+                }}
                 style={{
                   background: "transparent",
                   border: "none",
@@ -478,7 +471,7 @@ export default function ProductPage() {
                   justifyContent: "center",
                 }}
               >
-                <Forward size={18} /> 
+                <Forward size={18} />
               </button>
             </div>
           </aside>
