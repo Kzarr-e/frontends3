@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 import "./StoryPage.css";
-import PageLayout from "../components/PageLayout";
+import PageLayout from "../../components/PageLayout";
 
 interface StoryStyle {
   titleFont?: string;
