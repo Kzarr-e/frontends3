@@ -5,6 +5,7 @@ import Header from "./components/Header";
 import Footer from "./components/Footer";
 import "./globals.css";
 import { Montserrat } from "next/font/google";
+import Script from "next/script";
 
 const montserrat = Montserrat({
   subsets: ["latin"],
@@ -29,7 +30,10 @@ export default function RootLayout({
     <html lang="en">
       <body className={montserrat.variable}>
         {/* {!hideLayout && <Header />} */}
-
+        <Script
+          src="https://monitor.creonox.com/data/tracker.js"
+          strategy="afterInteractive"
+        />
         {children}
 
         {/* {!hideLayout && <Footer />} */}
