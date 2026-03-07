@@ -32,9 +32,7 @@ export default function MenPage() {
 
   const COOKIE_KEY = "accessories_products_cache";
   const mountedRef = useRef(false);
-
-
-
+// ffa
   useEffect(() => {
     document.body.style.overflow = isFilterOpen ? "hidden" : "auto";
   }, [isFilterOpen]);
