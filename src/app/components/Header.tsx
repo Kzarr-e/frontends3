@@ -263,7 +263,8 @@ const Header = () => {
           }}
         >
           Search
-        </button>
+        </button> 
+        {/* search btn */}
       </div>
     </>
   );
