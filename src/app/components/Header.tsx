@@ -57,7 +57,7 @@ const Header = () => {
       try {
         setSearchLoading(true);
 
-    const res = await fetch(`/api/search?q=${searchQuery}`);
+        const res = await fetch(`/api/search?q=${searchQuery}`);
 
         const data = await res.json();
 
@@ -118,13 +118,13 @@ const Header = () => {
               className="desktop-search hide-mobile"
               onClick={() => setSearchOpen(true)}
             />
+            <div
+              className="mobile-menu-btn"
+              onClick={() => setMenuOpen(!menuOpen)}
+            >
+              {menuOpen ? <IoClose size={22} /> : <IoMenu size={22} />}
+            </div>
 
-            <IoSearch
-              size={20}
-              className="mobile-search"
-              onClick={() => setSearchOpen(true)}
-              style={{ marginRight: "15px" }}
-            />
 
             <Link href="/heritage" className="hide-mobile headerlink">HERITAGE</Link>
             <Link href="/women" className="hide-mobile headerlink">WOMEN</Link>
@@ -161,12 +161,13 @@ const Header = () => {
               <IoPersonOutline size={20} />
             </Link>
 
-            <div
-              className="mobile-menu-btn"
-              onClick={() => setMenuOpen(!menuOpen)}
-            >
-              {menuOpen ? <IoClose size={22} /> : <IoMenu size={22} />}
-            </div>
+            <IoSearch
+              size={20}
+              className="mobile-search"
+              onClick={() => setSearchOpen(true)}
+              style={{ marginRight: "15px" }}
+            />
+
           </div>
         </div>
       </header>
@@ -185,6 +186,15 @@ const Header = () => {
           </Link>
           <Link href="/accessories" onClick={() => setMenuOpen(false)}>
             ACCESSORIES
+          </Link>
+          <Link href="/about">ORIGIN STORY</Link>
+
+          <Link href="/bag" >
+            <IoBagOutline size={20} />
+          </Link>
+
+          <Link href="/profile">
+            <IoPersonOutline size={20} />
           </Link>
         </div>
       </div>
