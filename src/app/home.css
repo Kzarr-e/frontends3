@@ -1,7 +1,6 @@
 *{
   margin: 0%;
   padding: 0%;
-
 }
 .hero-section {
   position: relative;
@@ -28,19 +27,14 @@
   height: 93vh;
   color: #fff;
 }
-
 /* ============================
    BANNER SECTION
 ============================ */
-
-
 .banner-container {
   margin-top: 10px;
   width: 100%;
   height: auto !important; 
- 
 }
-
 
 .banner-containe4 {
   margin-top: 10px;
@@ -120,6 +114,12 @@
     height: auto !important;    /* SUPER IMPORTANT */
     margin: 0;
   }
+  .hero-video {
+  width: 100vw;
+  height: 100vh;
+  object-fit: cover;
+  position: absolute;
+}
 }
 
 
