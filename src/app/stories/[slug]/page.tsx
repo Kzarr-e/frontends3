@@ -12,6 +12,8 @@ export async function generateStaticParams() {
   }));
 }
 
+// sdf
+
 export default function Page() {
   return <StoryPage />;
 }
