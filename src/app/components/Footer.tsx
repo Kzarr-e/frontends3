@@ -115,7 +115,7 @@ const Footer = () => {
             <Link href="/legal"><li>Legal & Privacy</li></Link>
               <Link href="/return-policy"><li>Return Policy</li></Link>
           </ul>
-        </div>.   <div className="footer-column">
+        </div> <div className="footer-column">
           <h3>About</h3>
           <ul>
            <Link href="/about"><li>About the Brand</li></Link>
