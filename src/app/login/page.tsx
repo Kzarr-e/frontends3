@@ -82,7 +82,7 @@ const LoginPage = () => {
       window.dispatchEvent(new Event("auth-change"));
 
       setSuccess("Login successful! Redirecting...");
-      router.replace("/home");
+      router.replace("/");
     } catch (err) {
       console.error(err);
       setError("Something went wrong. Please try again.");

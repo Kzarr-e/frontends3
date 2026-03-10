@@ -51,9 +51,7 @@ export default function StoryPage() {
     loadStory();
   }, [slug, API]);
 
-  if (!story) {
-    return <div className="loading">Loading...</div>;
-  }
+  if (!story) return null;
 
   const images = story.images ?? [];
 

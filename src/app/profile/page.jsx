@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 import { Edit, Trash2, X, MapPin } from "lucide-react";
-
+import "./luxury-loader.css"
 import styles from "./Profile.module.css";
 import PageLayout from "../components/PageLayout";
 import SidebarNav from "../components/SidebarNav";
@@ -64,8 +64,8 @@ export default function ProfilePage() {
     name: "",
     email: "",
     phone: "",
-    countryIso: "IN",
-    dial_code: "+91",
+    countryIso: "USA",
+    dial_code: "+1",
   });
 
   const [addresses, setAddresses] = useState([]);
@@ -131,7 +131,14 @@ export default function ProfilePage() {
   }, [mounted]);
 
   if (!mounted) return null;
-  if (!user) return <div className={styles.loading}>Loading profile…</div>;
+  if (!user) return   <div className="luxury-loader">
+      <div className="loader-logo">
+        <h1 className="brand-name">KZARRĒ</h1>
+      </div>
+      <div className="loader-ring">
+        <div className="ring"></div>
+      </div>
+    </div>;
 
   /* ================================
      Save Profile

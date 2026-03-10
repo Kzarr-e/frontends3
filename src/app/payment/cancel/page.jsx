@@ -30,7 +30,7 @@ export default function PaymentCancelPage() {
               Try Again
             </button>
 
-            <button style={styles.home} onClick={() => router.push("/home")}>
+            <button style={styles.home} onClick={() => router.push("/")}>
               Go to Home
             </button>
           </div>

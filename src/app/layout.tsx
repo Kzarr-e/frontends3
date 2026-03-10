@@ -30,12 +30,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={montserrat.variable}>
         {/* {!hideLayout && <Header />} */}
-        <Script
-          src="https://monitor.creonox.com/data/tracker.js"
-          strategy="afterInteractive"
-        />
         {children}
-
         {/* {!hideLayout && <Footer />} */}
       </body>
     </html>

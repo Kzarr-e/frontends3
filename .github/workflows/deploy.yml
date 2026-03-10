@@ -11,10 +11,10 @@ jobs:
 
     steps:
 
-      - name: Checkout repo
+      - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Setup Node
+      - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 20
@@ -23,9 +23,11 @@ jobs:
         run: npm install
 
       - name: Build Next.js
-        run: npm run build
-        env: 
-            NEXT_PUBLIC_BACKEND_API_URL: https://api.kzarre.com
+        run: |
+          npm run build
+          npm run export
+        env:
+          NEXT_PUBLIC_BACKEND_API_URL: https://api.kzarre.com
 
       - name: Deploy to S3
         uses: jakejarvis/s3-sync-action@master

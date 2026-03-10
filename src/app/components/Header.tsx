@@ -134,7 +134,7 @@ const Header = () => {
 
           {/* CENTER LOGO */}
           <div className="logo">
-            <Link href="/home">
+            <Link href="/">
               <Image
                 src="/Asset/logo.png"
                 alt="KZARRĒ Logo"

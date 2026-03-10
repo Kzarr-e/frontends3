@@ -1,0 +1,73 @@
+/* Fullscreen overlay */
+.luxury-loader {
+  position: fixed;
+  inset: 0;
+  background-color: #ffffff; /* deep green background */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+  animation: fadeIn 0.3s ease-in; 
+  width: 100vw;
+  height: 100vh;
+}
+
+/* Brand name */
+.brand-name {
+  font-family: "Cinzel";
+  font-size: 2rem;
+  letter-spacing: 0.5em;
+  color: #EFBF04; /* gold */
+  text-transform: uppercase;
+  margin-bottom: 30px;
+  animation: glow 2s infinite alternate;
+}
+
+/* Elegant ring animation */
+.loader-ring {
+  position: relative;
+  width: 90px;
+  height: 90px;
+}
+
+.ring {
+  width: 90px;
+  height: 90px;
+  border: 3px solid rgba(212, 175, 55, 0.3);
+  border-top-color: #EFBF04;
+  border-radius: 50%;
+  animation: spin 1.2s linear infinite;
+  box-shadow: 0 0 20px rgba(212, 175, 55, 0.4);
+}
+
+/* Keyframes */
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes glow {
+  from {
+    text-shadow: 0 0 5px rgba(212, 175, 55, 0.2);
+  }
+  to {
+    text-shadow: 0 0 15px rgba(212, 175, 55, 0.8);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Optional fade-out animation */
+html[data-nextjs-scroll-focus-boundary] .luxury-loader {
+  opacity: 0;
+  transition: opacity 0.4s ease-out;
+}

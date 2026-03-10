@@ -16,7 +16,7 @@ export default function SidebarNav() {
     { href: "/profile", label: "My Profile", icon: <User size={18} /> },
     { href: "/order", label: "Orders", icon: <Package size={18} /> },
     { href: "/settings", label: "Settings", icon: <Settings size={18} /> },
-    { href: "/home", label: "Shop", icon: <ShoppingCart size={18} /> },
+    { href: "/", label: "Shop", icon: <ShoppingCart size={18} /> },
   ];
 
   return (

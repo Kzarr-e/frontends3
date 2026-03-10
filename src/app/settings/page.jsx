@@ -27,7 +27,7 @@ export default function SettingsPage() {
         "=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
     });
 
-    // Redirect user (you can change to "/home")
+    // Redirect user (you can change to "/")
     window.location.href = "/login";
   }
 

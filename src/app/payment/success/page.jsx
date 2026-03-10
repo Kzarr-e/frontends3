@@ -69,7 +69,7 @@ export default function SuccessPage() {
         <div style={styles.page}>
           <div style={styles.card}>
             <h2>{error || "Order not found"}</h2>
-            <a href="/home" style={styles.primaryBtn}>
+            <a href="/" style={styles.primaryBtn}>
               Back to Home
             </a>
           </div>
@@ -199,7 +199,7 @@ export default function SuccessPage() {
 
           {/* ✅ Footer Actions */}
           <div style={styles.footer}>
-            <a href="/home" style={styles.primaryBtn}>
+            <a href="/" style={styles.primaryBtn}>
               Continue Shopping →
             </a>
 

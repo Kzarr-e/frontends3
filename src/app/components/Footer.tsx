@@ -46,7 +46,7 @@ const Footer = () => {
     <div className="footer">
       {/* LOGO */}
       <div className="footer-logo logo">
-        <Link href="/home">
+        <Link href="/">
           <Image src={logo} alt="KZARRĒ Logo" className="logo-img" />
         </Link>
       </div>

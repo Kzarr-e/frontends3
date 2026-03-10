@@ -96,7 +96,7 @@ export default function VerifyEmailPage() {
       window.dispatchEvent(new Event("auth-change"));
 
       setSuccess("Email verified successfully!");
-      router.replace("/home");
+      router.replace("/");
     } catch {
       setError("Verification failed");
     } finally {
