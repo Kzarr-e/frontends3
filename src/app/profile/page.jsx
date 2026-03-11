@@ -131,14 +131,14 @@ export default function ProfilePage() {
   }, [mounted]);
 
   if (!mounted) return null;
-  if (!user) return   <div className="luxury-loader">
-      <div className="loader-logo">
-        <h1 className="brand-name">KZARRĒ</h1>
-      </div>
-      <div className="loader-ring">
-        <div className="ring"></div>
-      </div>
-    </div>;
+  if (!user) return <div className="luxury-loader">
+    <div className="loader-logo">
+      <h1 className="brand-name">KZARRĒ</h1>
+    </div>
+    <div className="loader-ring">
+      <div className="ring"></div>
+    </div>
+  </div>;
 
   /* ================================
      Save Profile
@@ -177,7 +177,7 @@ export default function ProfilePage() {
     setEditingAddress(false);
     setAddressForm({
       title: "Home",
-      name: "",
+      name: user?.name || "",
       line1: "",
       city: "",
       state: "",
@@ -191,7 +191,12 @@ export default function ProfilePage() {
 
   function openEditAddress(addr) {
     setEditingAddress(true);
-    setAddressForm(addr);
+
+    setAddressForm({
+      ...addr,
+      name: addr.name || user?.name || ""
+    });
+
     setShowModal(true);
   }
 
@@ -248,7 +253,7 @@ export default function ProfilePage() {
   ================================= */
 
   return (
- <PageLayout>
+    <PageLayout>
       <div className={styles.pageWrap}>
         <Toast toast={toast} onClose={() => setToast(null)} />
 
@@ -386,6 +391,6 @@ export default function ProfilePage() {
           </div>
         )}
       </div>
-</PageLayout>
+    </PageLayout>
   );
 }

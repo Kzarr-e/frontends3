@@ -33,7 +33,7 @@ export default function SuccessPage() {
     async function fetchOrder() {
       try {
         const res = await fetch(
-          `${process.env.NEXT_PUBLIC_BACKEND_API_URL}/api/orders/${orderId}`,
+          `${process.env.NEXT_PUBLIC_BACKEND_API_URL}/api/checkout/order/${orderId}`,
           { cache: "no-store" }
         );
 
@@ -54,10 +54,10 @@ export default function SuccessPage() {
   /* ================= ✅ LOADING ================= */
   if (loading) {
     return (
- 
-        <div style={styles.page}>
-          <div style={styles.card}>Loading order details...</div>
-        </div>
+
+      <div style={styles.page}>
+        <div style={styles.card}>Loading order details...</div>
+      </div>
 
     );
   }
@@ -65,15 +65,15 @@ export default function SuccessPage() {
   /* ================= ✅ ERROR ================= */
   if (error || !order) {
     return (
- 
-        <div style={styles.page}>
-          <div style={styles.card}>
-            <h2>{error || "Order not found"}</h2>
-            <a href="/" style={styles.primaryBtn}>
-              Back to Home
-            </a>
-          </div>
+
+      <div style={styles.page}>
+        <div style={styles.card}>
+          <h2>{error || "Order not found"}</h2>
+          <a href="/" style={styles.primaryBtn}>
+            Back to Home
+          </a>
         </div>
+      </div>
 
     );
   }
@@ -95,9 +95,9 @@ export default function SuccessPage() {
   // ✅ AUTO-CALCULATE SUBTOTAL FROM ITEMS
   const calculatedSubtotal = Array.isArray(order.items)
     ? order.items.reduce(
-        (sum, item) => sum + (item.price ?? 0) * (item.qty ?? 1),
-        0
-      )
+      (sum, item) => sum + (item.price ?? 0) * (item.qty ?? 1),
+      0
+    )
     : 0;
 
   const subtotal =
@@ -121,94 +121,94 @@ export default function SuccessPage() {
 
   /* ================= ✅ FINAL UI ================= */
   return (
- 
-      <div style={styles.page}>
-        <div style={styles.card}>
-          {/* ✅ Header */}
-          <div style={styles.header}>
-            <h1 style={styles.title}>Order Confirmed</h1>
-            <p style={styles.subtitle}>
-              Thank you for shopping with <strong>KZARRE</strong>
-            </p>
+
+    <div style={styles.page}>
+      <div style={styles.card}>
+        {/* ✅ Header */}
+        <div style={styles.header}>
+          <h1 style={styles.title}>Order Confirmed</h1>
+          <p style={styles.subtitle}>
+            Thank you for shopping with <strong>KZARRE</strong>
+          </p>
+        </div>
+
+        {/* ✅ Order Info */}
+        <div style={styles.section}>
+          <div style={styles.row}>
+            <span>Order ID</span>
+            <strong>{order._id || orderId}</strong>
           </div>
-
-          {/* ✅ Order Info */}
-          <div style={styles.section}>
-            <div style={styles.row}>
-              <span>Order ID</span>
-              <strong>{order._id || orderId}</strong>
-            </div>
-            <div style={styles.row}>
-              <span>Order Date</span>
-              <strong>
-                {order.createdAt
-                  ? new Date(order.createdAt).toLocaleDateString()
-                  : new Date().toLocaleDateString()}
-              </strong>
-            </div>
-            <div style={styles.row}>
-              <span>Payment Method</span>
-              <strong>{order.paymentMethod || "Cash on Delivery"}</strong>
-            </div>
+          <div style={styles.row}>
+            <span>Order Date</span>
+            <strong>
+              {order.createdAt
+                ? new Date(order.createdAt).toLocaleDateString()
+                : new Date().toLocaleDateString()}
+            </strong>
           </div>
-
-          {/* ✅ Customer Info */}
-          <div style={styles.section}>
-            <h3 style={styles.sectionTitle}>Billing Details</h3>
-            <div style={styles.row}>
-              <span>Name</span>
-              <strong>{customerName}</strong>
-            </div>
-            <div style={styles.row}>
-              <span>Email</span>
-              <strong>{customerEmail}</strong>
-            </div>
-          </div>
-
-          {/* ✅ Order Items */}
-          <div style={styles.section}>
-            <h3 style={styles.sectionTitle}>Order Summary</h3>
-
-            {Array.isArray(order.items) &&
-              order.items.map((item, i) => (
-                <div key={i} style={styles.itemRow}>
-                  <span>
-                    {item.product?.name || item.name} × {item.qty ?? 1}
-                  </span>
-                  <strong>{formatUSD(item.price ?? 0)}</strong>
-                </div>
-              ))}
-
-            <hr style={styles.divider} />
-
-            <div style={styles.totalRow}>
-              <span>Subtotal</span>
-              <strong>{formatUSD(subtotal)}</strong>
-            </div>
-
-            <div style={styles.totalRow}>
-              <span>Shipping</span>
-              <strong>{shipping === 0 ? "Free" : formatUSD(shipping)}</strong>
-            </div>
-
-            <div style={styles.grandTotal}>
-              <span>Total</span>
-              <strong>{formatUSD(total)}</strong>
-            </div>
-          </div>
-
-          {/* ✅ Footer Actions */}
-          <div style={styles.footer}>
-            <a href="/" style={styles.primaryBtn}>
-              Continue Shopping →
-            </a>
-
-            <a href="/orders" style={styles.secondaryBtn}>
-              View My Orders
-            </a>
+          <div style={styles.row}>
+            <span>Payment Method</span>
+            <strong>{order.paymentMethod || "Cash on Delivery"}</strong>
           </div>
         </div>
+
+        {/* ✅ Customer Info */}
+        <div style={styles.section}>
+          <h3 style={styles.sectionTitle}>Billing Details</h3>
+          <div style={styles.row}>
+            <span>Name</span>
+            <strong>{customerName}</strong>
+          </div>
+          <div style={styles.row}>
+            <span>Email</span>
+            <strong>{customerEmail}</strong>
+          </div>
+        </div>
+
+        {/* ✅ Order Items */}
+        <div style={styles.section}>
+          <h3 style={styles.sectionTitle}>Order Summary</h3>
+
+          {Array.isArray(order.items) &&
+            order.items.map((item, i) => (
+              <div key={i} style={styles.itemRow}>
+                <span>
+                  {item.product?.name || item.name} × {item.qty ?? 1}
+                </span>
+                <strong>{formatUSD(item.price ?? 0)}</strong>
+              </div>
+            ))}
+
+          <hr style={styles.divider} />
+
+          <div style={styles.totalRow}>
+            <span>Subtotal</span>
+            <strong>{formatUSD(subtotal)}</strong>
+          </div>
+
+          <div style={styles.totalRow}>
+            <span>Shipping</span>
+            <strong>{shipping === 0 ? "Free" : formatUSD(shipping)}</strong>
+          </div>
+
+          <div style={styles.grandTotal}>
+            <span>Total</span>
+            <strong>{formatUSD(total)}</strong>
+          </div>
+        </div>
+
+        {/* ✅ Footer Actions */}
+        <div style={styles.footer}>
+          <a href="/" style={styles.primaryBtn}>
+            Continue Shopping →
+          </a>
+
+          <a href="/order" style={styles.secondaryBtn}>
+            View My Orders
+          </a>
+        </div>
       </div>
+    </div>
 
   );
 }
