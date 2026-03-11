@@ -32,7 +32,7 @@ export default function MenPage() {
 
   const COOKIE_KEY = "accessories_products_cache";
   const mountedRef = useRef(false);
-// ffa
+  // ffa
   useEffect(() => {
     document.body.style.overflow = isFilterOpen ? "hidden" : "auto";
   }, [isFilterOpen]);
@@ -66,14 +66,11 @@ export default function MenPage() {
         const data = await res.json();
 
 
-       let accessoriesProducts = data.products.filter((p) =>
-  p.category?.toLowerCase() === "accessories" ||
-  (Array.isArray(p.categories) &&
-    p.categories.some(c => c.toLowerCase() === "accessories"))
-);
-
-
-       
+        let accessoriesProducts = data.products.filter((p) =>
+          p.category?.toLowerCase() === "accessories" ||
+          (Array.isArray(p.categories) &&
+            p.categories.some(c => c.toLowerCase() === "accessories"))
+        );
         accessoriesProducts = accessoriesProducts.sort((a, b) => {
           const aOut = Number(a.stockQuantity) <= 0;
           const bOut = Number(b.stockQuantity) <= 0;
@@ -111,12 +108,15 @@ export default function MenPage() {
 
         const data = await res.json();
 
-        if (data?.womenPageVideoUrl && mountedRef.current) {
-          setCmsVideo(data.womenPageVideoUrl);
+        if (data?.accessoriesVideoUrl
+          && mountedRef.current) {
+          setCmsVideo(data.accessoriesVideoUrl
+          );
 
-          Cookies.set("accessories_page_video", data.womenPageVideoUrl, {
-            expires: 1,
-          });
+          Cookies.set("accessories_page_video", data.accessoriesVideoUrl
+            , {
+              expires: 1,
+            });
         }
       } catch (err) {
         console.warn("accessories CMS video failed:", err);
@@ -392,283 +392,283 @@ export default function MenPage() {
   /* ================= ✅ FINAL WOMEN PAGE ================= */
   return (
     <PageLayout>
-    <section className="gallery">
-      <button className="open-filter-btn" onClick={() => setIsFilterOpen(true)}>
-        FILTER
-      </button>
-      {matchedCount > 0 && (
-        <div className="filter-result-count">
-          Showing {matchedCount} matching products first
-        </div>
-      )}
+      <section className="gallery">
+        <button className="open-filter-btn" onClick={() => setIsFilterOpen(true)}>
+          FILTER
+        </button>
+        {matchedCount > 0 && (
+          <div className="filter-result-count">
+            Showing {matchedCount} matching products first
+          </div>
+        )}
 
 
-      {isFilterOpen && (
-        <div className="filter-backdrop" onClick={() => setIsFilterOpen(false)} />
-      )}
+        {isFilterOpen && (
+          <div className="filter-backdrop" onClick={() => setIsFilterOpen(false)} />
+        )}
 
-      <div className={`filter-drawer ${isFilterOpen ? "open" : ""}`}>
-        <div className="filter-header">
-          <span>FILTERS</span>
-          <button onClick={() => setIsFilterOpen(false)}>✕</button>
-        </div>
+        <div className={`filter-drawer ${isFilterOpen ? "open" : ""}`}>
+          <div className="filter-header">
+            <span>FILTERS</span>
+            <button onClick={() => setIsFilterOpen(false)}>✕</button>
+          </div>
 
-        <div className="filter-content">
-          {/* CATEGORY */}
+          <div className="filter-content">
+            {/* CATEGORY */}
 
 
-          {/* ================= CATEGORY ================= */}
-          {dynamicFilters.categories.length > 0 && (
-            <div className="filter-section">
-              <div className="filter-section-title">CATEGORY</div>
+            {/* ================= CATEGORY ================= */}
+            {dynamicFilters.categories.length > 0 && (
+              <div className="filter-section">
+                <div className="filter-section-title">CATEGORY</div>
 
-              <div className="filter-options">
-                {dynamicFilters.categories.map((cat) => {
-                  const isChecked =
-                    searchParams.get("category")?.toLowerCase() === cat.toLowerCase();
+                <div className="filter-options">
+                  {dynamicFilters.categories.map((cat) => {
+                    const isChecked =
+                      searchParams.get("category")?.toLowerCase() === cat.toLowerCase();
 
-                  return (
-                    <label key={cat} className="filter-option">
-                      <input
-                        type="radio"
-                        name="category"
-                        checked={isChecked}
-                        onChange={() => {
+                    return (
+                      <label key={cat} className="filter-option">
+                        <input
+                          type="radio"
+                          name="category"
+                          checked={isChecked}
+                          onChange={() => {
+                            const p = new URLSearchParams(searchParams);
+                            p.set("category", cat);
+                            router.push(`?${p.toString()}`);
+                          }}
+                        />
+                        {cat}
+                      </label>
+                    );
+                  })}
+                </div>
+              </div>
+            )}
+
+
+            {dynamicFilters.colors.length > 0 && (
+              <div className="filter-section">
+                <div className="filter-section-title">COLOR</div>
+
+                <div className="color-grid">
+                  {dynamicFilters.colors.map((c) => {
+                    const value = c.toLowerCase();
+                    const isActive = searchParams.get("color") === value;
+
+                    return (
+                      <button
+                        key={value}
+                        className={`color-swatch ${isActive ? "active" : ""}`}
+                        style={{ backgroundColor: value }}
+                        title={c}
+                        onClick={() => {
                           const p = new URLSearchParams(searchParams);
-                          p.set("category", cat);
+
+                          // toggle behavior
+                          if (isActive) {
+                            p.delete("color");
+                          } else {
+                            p.set("color", value);
+                          }
+
                           router.push(`?${p.toString()}`);
                         }}
                       />
-                      {cat}
-                    </label>
-                  );
-                })}
-              </div>
-            </div>
-          )}
-
-
-          {dynamicFilters.colors.length > 0 && (
-            <div className="filter-section">
-              <div className="filter-section-title">COLOR</div>
-
-              <div className="color-grid">
-                {dynamicFilters.colors.map((c) => {
-                  const value = c.toLowerCase();
-                  const isActive = searchParams.get("color") === value;
-
-                  return (
-                    <button
-                      key={value}
-                      className={`color-swatch ${isActive ? "active" : ""}`}
-                      style={{ backgroundColor: value }}
-                      title={c}
-                      onClick={() => {
-                        const p = new URLSearchParams(searchParams);
-
-                        // toggle behavior
-                        if (isActive) {
-                          p.delete("color");
-                        } else {
-                          p.set("color", value);
-                        }
-
-                        router.push(`?${p.toString()}`);
-                      }}
-                    />
-                  );
-                })}
-              </div>
-            </div>
-          )}
-
-          {/* ================= SIZE ================= */}
-          {dynamicFilters.sizes.length > 0 && (
-            <div className="filter-section">
-              <div className="filter-section-title">SIZE</div>
-
-              <div className="filter-size-grid">
-                {dynamicFilters.sizes.map((s) => {
-                  const isSelected = searchParams.get("size") === s;
-
-                  return (
-                    <button
-                      key={s}
-                      type="button"
-                      className={`size-box ${isSelected ? "active" : ""}`}
-                      onClick={() => {
-                        const p = new URLSearchParams(searchParams);
-
-                        // 🔁 Toggle behavior
-                        if (isSelected) {
-                          p.delete("size");
-                        } else {
-                          p.set("size", s);
-                        }
-
-                        router.push(`?${p.toString()}`);
-                      }}
-                    >
-                      {s}
-                    </button>
-                  );
-                })}
-              </div>
-            </div>
-          )}
-
-
-
-
-
-          {/* PRICE RANGE SLIDER */}
-          <div className="filter-section">
-            <div className="filter-section-title">
-              <span>PRICE</span>
-            </div>
-
-            <div className="price-slider-wrapper">
-              {/* RANGE TRACK */}
-              <div className="price-track" />
-
-              {/* ACTIVE RANGE */}
-              <div
-                className="price-range-active"
-                style={{
-                  left: `${((priceRange.min - priceLimits.min) /
-                    (priceLimits.max - priceLimits.min)) *
-                    100
-                    }%`,
-                  width: `${((priceRange.max - priceRange.min) /
-                    (priceLimits.max - priceLimits.min)) *
-                    100
-                    }%`,
-                }}
-              />
-
-              {/* MIN SLIDER */}
-              <input
-                type="range"
-                min={priceLimits.min}
-                max={priceLimits.max}
-                value={priceRange.min}
-                onChange={(e) =>
-                  setPriceRange((prev) => ({
-                    ...prev,
-                    min: Math.min(Number(e.target.value), prev.max - 1),
-                  }))
-                }
-                className="price-thumb"
-              />
-
-              {/* MAX SLIDER */}
-              <input
-                type="range"
-                min={priceLimits.min}
-                max={priceLimits.max}
-                value={priceRange.max}
-                onChange={(e) =>
-                  setPriceRange((prev) => ({
-                    ...prev,
-                    max: Math.max(Number(e.target.value), prev.min + 1),
-                  }))
-                }
-                className="price-thumb"
-              />
-
-              {/* LABELS */}
-              <div className="price-labels">
-                <div className="price-label">
-                  <p>Min</p>
-                  <span>${priceRange.min}</span>
-                </div>
-
-                <div className="price-label">
-                  <p>Max</p>
-                  <span>${priceRange.max}</span>
+                    );
+                  })}
                 </div>
               </div>
+            )}
 
+            {/* ================= SIZE ================= */}
+            {dynamicFilters.sizes.length > 0 && (
+              <div className="filter-section">
+                <div className="filter-section-title">SIZE</div>
+
+                <div className="filter-size-grid">
+                  {dynamicFilters.sizes.map((s) => {
+                    const isSelected = searchParams.get("size") === s;
+
+                    return (
+                      <button
+                        key={s}
+                        type="button"
+                        className={`size-box ${isSelected ? "active" : ""}`}
+                        onClick={() => {
+                          const p = new URLSearchParams(searchParams);
+
+                          // 🔁 Toggle behavior
+                          if (isSelected) {
+                            p.delete("size");
+                          } else {
+                            p.set("size", s);
+                          }
+
+                          router.push(`?${p.toString()}`);
+                        }}
+                      >
+                        {s}
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
+            )}
+
+
+
+
+
+            {/* PRICE RANGE SLIDER */}
+            <div className="filter-section">
+              <div className="filter-section-title">
+                <span>PRICE</span>
+              </div>
+
+              <div className="price-slider-wrapper">
+                {/* RANGE TRACK */}
+                <div className="price-track" />
+
+                {/* ACTIVE RANGE */}
+                <div
+                  className="price-range-active"
+                  style={{
+                    left: `${((priceRange.min - priceLimits.min) /
+                      (priceLimits.max - priceLimits.min)) *
+                      100
+                      }%`,
+                    width: `${((priceRange.max - priceRange.min) /
+                      (priceLimits.max - priceLimits.min)) *
+                      100
+                      }%`,
+                  }}
+                />
+
+                {/* MIN SLIDER */}
+                <input
+                  type="range"
+                  min={priceLimits.min}
+                  max={priceLimits.max}
+                  value={priceRange.min}
+                  onChange={(e) =>
+                    setPriceRange((prev) => ({
+                      ...prev,
+                      min: Math.min(Number(e.target.value), prev.max - 1),
+                    }))
+                  }
+                  className="price-thumb"
+                />
+
+                {/* MAX SLIDER */}
+                <input
+                  type="range"
+                  min={priceLimits.min}
+                  max={priceLimits.max}
+                  value={priceRange.max}
+                  onChange={(e) =>
+                    setPriceRange((prev) => ({
+                      ...prev,
+                      max: Math.max(Number(e.target.value), prev.min + 1),
+                    }))
+                  }
+                  className="price-thumb"
+                />
+
+                {/* LABELS */}
+                <div className="price-labels">
+                  <div className="price-label">
+                    <p>Min</p>
+                    <span>${priceRange.min}</span>
+                  </div>
+
+                  <div className="price-label">
+                    <p>Max</p>
+                    <span>${priceRange.max}</span>
+                  </div>
+                </div>
+
+              </div>
             </div>
+
+
           </div>
 
+          <div className="filter-footer">
+            <button
+              onClick={() => {
+                setPriceRange(priceLimits);
+                router.push("/accessories");
+              }}
+            >
+              CLEAR
+            </button>
 
+            <button
+              onClick={() => {
+                const p = new URLSearchParams(searchParams);
+
+                p.set("minPrice", String(priceRange.min));
+                p.set("maxPrice", String(priceRange.max));
+
+                router.push(`?${p.toString()}`);
+                setIsFilterOpen(false);
+              }}
+            >
+              APPLY
+            </button>
+
+          </div>
         </div>
 
-        <div className="filter-footer">
-          <button
-            onClick={() => {
-              setPriceRange(priceLimits);
-              router.push("/accessories");
-            }}
-          >
-            CLEAR
-          </button>
 
-          <button
-            onClick={() => {
-              const p = new URLSearchParams(searchParams);
+        <div className="gallery-div reorder-animate">
 
-              p.set("minPrice", String(priceRange.min));
-              p.set("maxPrice", String(priceRange.max));
+          {firstFour.map((p) => (
+            <ProductCard
+              key={p._id}
+              p={p}
+              isMatched={
+                hasActiveFilters(searchParams) &&
+                doesProductMatchFilters(p, searchParams)
+              }
+            />
 
-              router.push(`?${p.toString()}`);
-              setIsFilterOpen(false);
-            }}
-          >
-            APPLY
-          </button>
-
+          ))}
         </div>
-      </div>
 
+        <div className="gallery-video">
+          {cmsVideo && (
+            <video
+              src={cmsVideo}
+              autoPlay
+              loop
+              muted
+              playsInline
+              preload="auto"
+              fetchPriority="high"
+              poster="/placeholder.png"
+              className="heritage-video"
+            />
+          )}
+        </div>
 
-      <div className="gallery-div reorder-animate">
+        <div className="gallery-div reorder-animate section-two">
 
-        {firstFour.map((p) => (
-          <ProductCard
-            key={p._id}
-            p={p}
-            isMatched={
-              hasActiveFilters(searchParams) &&
-              doesProductMatchFilters(p, searchParams)
-            }
-          />
+          {remaining.map((p) => (
+            <ProductCard
+              key={p._id}
+              p={p}
+              isMatched={
+                hasActiveFilters(searchParams) &&
+                doesProductMatchFilters(p, searchParams)
+              }
+            />
 
-        ))}
-      </div>
-
-      <div className="gallery-video">
-        {cmsVideo && (
-          <video
-            src={cmsVideo}
-            autoPlay
-            loop
-            muted
-            playsInline
-            preload="auto"
-            fetchPriority="high"
-            poster="/video-poster-Heritage.jpg"
-            className="heritage-video"
-          />
-        )}
-      </div>
-
-      <div className="gallery-div reorder-animate section-two">
-
-        {remaining.map((p) => (
-          <ProductCard
-            key={p._id}
-            p={p}
-            isMatched={
-              hasActiveFilters(searchParams) &&
-              doesProductMatchFilters(p, searchParams)
-            }
-          />
-
-        ))}
-      </div>
-    </section>
+          ))}
+        </div>
+      </section>
     </PageLayout>
   );
 }

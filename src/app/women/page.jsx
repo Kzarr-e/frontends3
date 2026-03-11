@@ -118,7 +118,7 @@ export default function WomenPage() {
           });
         }
       } catch (err) {
-        console.warn("Men CMS video failed:", err);
+        console.warn("Women CMS video failed:", err);
       }
     }
 
@@ -649,7 +649,7 @@ export default function WomenPage() {
             playsInline
             preload="auto"
             fetchPriority="high"
-            poster="/video-poster-Heritage.jpg"
+            poster="/placeholder.png"
             className="heritage-video"
           />
         )}

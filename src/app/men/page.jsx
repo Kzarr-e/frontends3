@@ -705,7 +705,7 @@ export default function MenPage() {
             playsInline
             preload="auto"
             fetchPriority="high"
-            poster="/video-poster-Heritage.jpg"
+            poster="/placeholder.png"
             className="heritage-video"
           />
         )}

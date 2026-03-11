@@ -98,10 +98,10 @@ export default function heritagePage() {
   }, []);
 
   /* ================= ✅ LOAD WOMEN PAGE VIDEO ================= */
-  useEffect(() => {
+   useEffect(() => {
     async function loadVideo() {
       try {
-        const cachedVideo = Cookies.get("accessories_page_video");
+        const cachedVideo = Cookies.get("heritage_page_video");
         if (cachedVideo) {
           setCmsVideo(cachedVideo);
         }
@@ -113,15 +113,15 @@ export default function heritagePage() {
 
         const data = await res.json();
 
-        if (data?.womenPageVideoUrl && mountedRef.current) {
-          setCmsVideo(data.womenPageVideoUrl);
+        if (data?.heritageVideoUrl && mountedRef.current) {
+          setCmsVideo(data.heritageVideoUrl);
 
-          Cookies.set("heritage_page_video", data.womenPageVideoUrl, {
+          Cookies.set("heritage_page_video", data.heritageVideoUrl, {
             expires: 1,
           });
         }
       } catch (err) {
-        console.warn("heritage CMS video failed:", err);
+        console.warn("Heritage CMS video failed:", err);
       }
     }
 
@@ -638,7 +638,7 @@ export default function heritagePage() {
               playsInline
               preload="auto"
               fetchPriority="high"
-              poster="/video-poster-Heritage.jpg"
+              poster="/placeholder.png"
               className="heritage-video"
             />
           )}
