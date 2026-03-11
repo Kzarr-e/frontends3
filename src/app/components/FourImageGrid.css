@@ -193,7 +193,8 @@
 
   .grid-text {
     margin-top: 0%;
-    height: 4.5rem;
+    height: 4rem;
+    padding-top: 2%;
   }
 
   .grid-item:hover .grid-image {
