@@ -62,7 +62,7 @@ export default function AboutPage() {
       <section className="about-content">
         <p className="quote">
           {about.content.quote.text}
-          <span> “{about.content.quote.highlight}” </span>
+          <span> {about.content.quote.highlight} </span>
         </p>
         <p className="intro">{about.content.intro}</p>
       </section>
