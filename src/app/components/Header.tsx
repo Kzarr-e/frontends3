@@ -57,7 +57,9 @@ const Header = () => {
       try {
         setSearchLoading(true);
 
-        const res = await fetch(`/api/search?q=${searchQuery}`);
+      const res = await fetch(
+  `${process.env.NEXT_PUBLIC_BACKEND_API_URL}/api/search?q=${searchQuery}`
+);
 
         const data = await res.json();
 

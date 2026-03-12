@@ -1,29 +1,30 @@
 "use client";
 
 import React, { useEffect, useState, useRef } from "react";
-import { useSearchParams } from "next/navigation";
+import { useSearchParams, useRouter } from "next/navigation";
 import "./Styles.css";
 import Link from "next/link";
+import { IoClose } from "react-icons/io5";
 import PageLayout from "../components/PageLayout";
-
-/* ================= ✅ UTIL ================= */
+/* ================= UTIL ================= */
 function formatPrice(num) {
   return Number(num || 0).toLocaleString("en-US");
 }
 
 export default function SearchPage() {
   const searchParams = useSearchParams();
+  const router = useRouter();
   const query = searchParams.get("query");
 
   const [products, setProducts] = useState([]);
-  const [resultType, setResultType] = useState(""); // exact | related | none
+  const [resultType, setResultType] = useState("");
   const [loading, setLoading] = useState(true);
   const [hoveredId, setHoveredId] = useState(null);
   const [history, setHistory] = useState([]);
 
   const mountedRef = useRef(false);
 
-  /* ================= ✅ MOUNT SAFETY ================= */
+  /* ================= MOUNT SAFETY ================= */
   useEffect(() => {
     mountedRef.current = true;
 
@@ -37,7 +38,7 @@ export default function SearchPage() {
     };
   }, []);
 
-  /* ================= ✅ SAVE SEARCH HISTORY ================= */
+  /* ================= SAVE SEARCH HISTORY ================= */
   useEffect(() => {
     if (!query) return;
 
@@ -48,7 +49,7 @@ export default function SearchPage() {
     });
   }, [query]);
 
-  /* ================= ✅ FETCH SEARCH RESULTS ================= */
+  /* ================= FETCH SEARCH ================= */
   useEffect(() => {
     if (!query) return;
 
@@ -84,14 +85,14 @@ export default function SearchPage() {
     fetchSearch();
   }, [query]);
 
-  /* ================= ✅ IMAGE PICKER (HOVER ONLY) ================= */
+  /* ================= IMAGE PICKER ================= */
   const pickImage = (p) => {
     const imgs = p.gallery?.length ? p.gallery : [p.imageUrl];
     if (hoveredId === p._id && imgs.length > 1) return imgs[1];
     return imgs[0];
   };
 
-  /* ================= ✅ PRODUCT CARD (YOUR STYLE) ================= */
+  /* ================= PRODUCT CARD ================= */
   const ProductCard = ({ p }) => {
     const url = pickImage(p);
     const [loaded, setLoaded] = useState(false);
@@ -120,53 +121,71 @@ export default function SearchPage() {
     );
   };
 
-  /* ================= ✅ LOADING ================= */
+  /* ================= LOADING ================= */
   if (loading) {
     return (
-   
-        <section className="gallery">
-          <div className="gallery-div">
-            {Array(8)
-              .fill(0)
-              .map((_, i) => (
-                <div key={i} className="skeleton-card">
-                  <div className="skeleton-img" />
-                  <div className="skeleton-text" />
-                  <div className="skeleton-text small" />
-                </div>
-              ))}
-          </div>
-        </section>
- 
+      <section className="gallery">
+        <div className="gallery-div">
+          {Array(8)
+            .fill(0)
+            .map((_, i) => (
+              <div key={i} className="skeleton-card">
+                <div className="skeleton-img" />
+                <div className="skeleton-text" />
+                <div className="skeleton-text small" />
+              </div>
+            ))}
+        </div>
+      </section>
     );
   }
 
-  /* ================= ✅ FINAL SEARCH PAGE ================= */
+  /* ================= PAGE ================= */
   return (
-
+    <PageLayout>
       <section className="gallery">
 
-        {/* ✅ SEARCH HEADING */}
-        <div style={{ padding: "20px 10px" }}>
-          <h2 style={{ letterSpacing: "1px", fontSize: "12px" }}>
-            SEARCH RESULTS FOR: "{query}"
-          </h2>
+        {/* SEARCH HEADER */}
+        <div
+          style={{
+            padding: "20px 10px",
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+          }}
+        >
+          <div>
+            <h2 style={{ letterSpacing: "1px", fontSize: "12px" }}>
+              SEARCH RESULTS FOR: "{query}"
+            </h2>
 
-          {/* ✅ EXACT / RELATED BADGE */}
-          {resultType === "exact" && (
-            <p style={{ fontSize: 11, marginTop: 6, color: "green" }}>
-              Exact match found
-            </p>
-          )}
+            {resultType === "exact" && (
+              <p style={{ fontSize: 11, marginTop: 6, color: "green" }}>
+                Exact match found
+              </p>
+            )}
 
-          {resultType === "related" && (
-            <p style={{ fontSize: 11, marginTop: 6, color: "#888" }}>
-              Showing related products
-            </p>
-          )}
+            {resultType === "related" && (
+              <p style={{ fontSize: 11, marginTop: 6, color: "#888" }}>
+                Showing related products
+              </p>
+            )}
+          </div>
+
+          {/* CLOSE BUTTON */}
+          <button
+            onClick={() => router.back()}
+            style={{
+              border: "none",
+              background: "none",
+              cursor: "pointer",
+            }}
+          >
+            <IoClose size={28} />
+          </button>
         </div>
 
-        {/* ✅ RECENT SEARCHES */}
+        {/* RECENT SEARCHES */}
         {history.length > 0 && (
           <div style={{ padding: "10px 10px 30px" }}>
             <div style={{ display: "flex", justifyContent: "space-between" }}>
@@ -206,7 +225,7 @@ export default function SearchPage() {
           </div>
         )}
 
-        {/* ✅ SEARCH RESULTS GRID */}
+        {/* RESULTS GRID */}
         {products.length === 0 ? (
           <div style={{ padding: 40, textAlign: "center" }}>
             <h3>No products found</h3>
@@ -219,6 +238,6 @@ export default function SearchPage() {
           </div>
         )}
       </section>
-
-  );
+   </PageLayout>
+      );
 }
