@@ -53,19 +53,27 @@ export default function OrdersPage() {
     const fetchOrders = async () => {
       try {
         const API_URL = process.env.NEXT_PUBLIC_BACKEND_API_URL;
-
-        const res = await fetch(`${API_URL}/api/orders`, {
-          method: "GET",
+        const user =
+          typeof window !== "undefined"
+            ? JSON.parse(localStorage.getItem("kzarre_user") || "{}")
+            : null;
+        if (!user?.email) {
+          setError("User not logged in");
+          setLoading(false);
+          return;
+        }
+        const res = await fetch(`${API_URL}/api/orders/my-orders`, {
+          method: "POST",
           headers: {
             "Content-Type": "application/json",
           },
+          body: JSON.stringify({
+            email: user.email
+          })
         });
-
         const data = await res.json();
-
-        if (!res.ok) throw new Error(data.message || "Failed to fetch orders");
-
-        setOrders(data.orders || data);
+        if (!res.ok) throw new Error(data.message || "");
+        setOrders(data.orders || []);
       } catch (err: unknown) {
         if (err instanceof Error) setError(err.message);
         else setError("Something went wrong");
@@ -105,106 +113,106 @@ export default function OrdersPage() {
 
   return (
 
-<PageLayout>
-    <div className={styles.pageWrap}>
+    <PageLayout>
+      <div className={styles.pageWrap}>
 
-      <div className={styles.container}>
-        {/* ================= SIDEBAR ================= */}
-        <SidebarNav />
-        {/* ================= MAIN CONTENT ================= */}
-        <main className={styles.content}>
-          <h2 className={styles.sectionTitle}>Orders</h2>
+        <div className={styles.container}>
+          {/* ================= SIDEBAR ================= */}
+          <SidebarNav />
+          {/* ================= MAIN CONTENT ================= */}
+          <main className={styles.content}>
+            <h2 className={styles.sectionTitle}>Orders</h2>
 
-          {/* ================= FILTERS (ALWAYS VISIBLE) ================= */}
-          <div className={styles.filterRow}>
-            {["All", "In Progress", "Shipped", "Delivered", "Cancelled"].map((f) => (
-              <button
-                key={f}
-                onClick={() => setActiveFilter(f)}
-                className={`${styles.filterBtn} ${activeFilter === f ? styles.activeFilter : ""
-                  }`}
-              >
-                {f}
-              </button>
-            ))}
-          </div>
-
-          {/* ================= STATES ================= */}
-          {loading && <p>Loading orders...</p>}
-          {error && <p className={styles.error}>{error}</p>}
-
-          {!loading && filteredOrders.length === 0 && (
-            <div className={styles.emptyBox}>
-              <p className={styles.emptyTitle}>No orders found</p>
-              <p className={styles.emptyText}>Try changing the filter.</p>
-            </div>
-          )}
-
-          {/* ================= ORDERS LIST ================= */}
-          <div className={styles.ordersList}>
-            {filteredOrders.map((order) => {
-              const firstItem = order.items?.[0];
-
-              return (
-                <Link
-                  key={order._id}
-                 href={`/orders?id=${order.orderId}`}
-                  className={styles.orderCard}
+            {/* ================= FILTERS (ALWAYS VISIBLE) ================= */}
+            <div className={styles.filterRow}>
+              {["All", "In Progress", "Shipped", "Delivered", "Cancelled"].map((f) => (
+                <button
+                  key={f}
+                  onClick={() => setActiveFilter(f)}
+                  className={`${styles.filterBtn} ${activeFilter === f ? styles.activeFilter : ""
+                    }`}
                 >
-                  <div className={styles.statusRow}>
-                    <span
-                      className={`${styles.statusTag} ${styles[
-                        normalizeStatus(order.status)?.replace(/\s/g, "")
-                      ]
-                        }`}
-                    >
-                      {normalizeStatus(order.status)}
-                    </span>
+                  {f}
+                </button>
+              ))}
+            </div>
+
+            {/* ================= STATES ================= */}
+            {loading && <p>Loading orders...</p>}
+            {error && <p className={styles.error}>{error}</p>}
+
+            {!loading && filteredOrders.length === 0 && (
+              <div className={styles.emptyBox}>
+                <p className={styles.emptyTitle}>No orders found</p>
+                <p className={styles.emptyText}>Try changing the filter.</p>
+              </div>
+            )}
+
+            {/* ================= ORDERS LIST ================= */}
+            <div className={styles.ordersList}>
+              {filteredOrders.map((order) => {
+                const firstItem = order.items?.[0];
+
+                return (
+                  <Link
+                    key={order._id}
+                    href={`/orders?id=${order.orderId}`}
+                    className={styles.orderCard}
+                  >
+                    <div className={styles.statusRow}>
+                      <span
+                        className={`${styles.statusTag} ${styles[
+                          normalizeStatus(order.status)?.replace(/\s/g, "")
+                        ]
+                          }`}
+                      >
+                        {normalizeStatus(order.status)}
+                      </span>
 
 
-                    <span className={styles.date}>
-                      {new Date(order.createdAt).toDateString()}
-                    </span>
-                  </div>
-
-                  <div className={styles.orderContent}>
-                    <div className={styles.imageWrap}>
-                      <Image
-                        src={
-                          firstItem?.image ||
-                          "https://via.placeholder.com/100"
-                        }
-                        alt={firstItem?.name || "Product"}
-                        width={80}
-                        height={80}
-                        className={styles.imgs}
-                        unoptimized
-                      />
+                      <span className={styles.date}>
+                        {new Date(order.createdAt).toDateString()}
+                      </span>
                     </div>
 
-                    <div className={styles.orderInfo}>
-                      <p className={styles.orderId}>
-                        Order ID: <span>{order.orderId}</span>
-                      </p>
+                    <div className={styles.orderContent}>
+                      <div className={styles.imageWrap}>
+                        <Image
+                          src={
+                            firstItem?.image ||
+                            "https://via.placeholder.com/100"
+                          }
+                          alt={firstItem?.name || "Product"}
+                          width={80}
+                          height={80}
+                          className={styles.imgs}
+                          unoptimized
+                        />
+                      </div>
 
-                      <h4 className={styles.title}>{firstItem?.name}</h4>
+                      <div className={styles.orderInfo}>
+                        <p className={styles.orderId}>
+                          Order ID: <span>{order.orderId}</span>
+                        </p>
 
-                      <p className={styles.desc}>
-                        Colour: {firstItem?.color} | Size: {firstItem?.size}
-                      </p>
+                        <h4 className={styles.title}>{firstItem?.name}</h4>
 
-                      <p className={styles.price}>${order.amount}</p>
+                        <p className={styles.desc}>
+                          Colour: {firstItem?.color} | Size: {firstItem?.size}
+                        </p>
+
+                        <p className={styles.price}>${order.amount}</p>
+                      </div>
                     </div>
-                  </div>
 
-                  <div className={styles.arrow}>›</div>
-                </Link>
-              );
-            })}
-          </div>
-        </main>
+                    <div className={styles.arrow}>›</div>
+                  </Link>
+                );
+              })}
+            </div>
+          </main>
+        </div>
       </div>
-    </div>
-</PageLayout>
+    </PageLayout>
   );
 }

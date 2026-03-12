@@ -15,22 +15,30 @@
   padding-bottom: 20px;
   border-bottom: 1px solid rgba(255, 255, 255, 0.4);
 }
+
 .footer-logo {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 30px; /* spacing between line and logo */
+  gap: 30px;
+  /* spacing between line and logo */
   padding: 10px 0;
 }
+
 .footer-logo::before,
 .footer-logo::after {
   content: "";
-  width: 60vh;        /* short line */
-  height: 2px;        /* line thickness */
-  background: #EFBF04;   /* line color */
-  opacity: 0.8;       /* soften look */
+  width: 60vh;
+  /* short line */
+  height: 2px;
+  /* line thickness */
+  background: #EFBF04;
+  /* line color */
+  opacity: 0.8;
+  /* soften look */
   border-radius: 30px;
 }
+
 .footer-content {
   display: flex;
   justify-content: space-between;
@@ -39,12 +47,15 @@
   gap: 30px;
   width: 100%;
 }
-.footer-column-input{
+
+.footer-column-input {
   min-width: 420px;
 }
+
 .footer-column {
   min-width: 120px;
 }
+
 .footer-column-input,
 .footer-column {
   flex: 1;
@@ -55,64 +66,66 @@
   font-size: 0.9rem;
   margin-bottom: 15px;
   font-weight: 600;
+   text-transform: uppercase;
 }
+
 
 .footer-column ul {
   list-style: none;
   padding: 0;
   margin: 0;
 }
+
 .footer-column li,
 .footer-column li a,
 a[href^="tel"] {
   color: black !important;
   text-decoration: none !important;
 }
+.footer-column li:hover,
+.footer-column li a:hover {
+  color: #EFBF04 !important;
+}
+
 .footer-column li {
   color: black;
   font-size: 0.8rem;
   margin-bottom: 6px;
   cursor: pointer;
+  
 }
-
 /* ============================
    FOOTER SUBSCRIBE BUTTON
 ============================ */
-.footer-subscribe-btn {
-  margin-top: 14px;
-  width: 30%;
-  height: 44px;
+.footer-input-wrapper {
+  position: relative;
+  width: 100%;
+  max-width: 420px;
+}
 
-  background-color: #ffffff;      /* deep luxury green */
-  color: #000000;
+.footer-subscribe-btn {
+  position: absolute;
+  right: 0px;
+  top: 4px;
+  bottom: 4px;
+  padding: 0 20px;
+  background-color: #ffffff00;
   font-family: "Montserrat", sans-serif;
   font-size: 0.75rem;
   font-weight: 500;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-
-  border: 1px solid #dddddd;
-  border-radius: 0;
-
+  border: none;
   cursor: pointer;
   transition: all 0.25s ease;
 }
-
-/* HOVER */
-.footer-subscribe-btn:hover {
-  background-color: #ffffff;
-  color: #0c2b19;
-  border-color: #0c2b19;
+.footer-subscribe-btn:hover{
+  color: #EFBF04;
 }
-
-/* ACTIVE */
-.footer-subscribe-btn:active {
-  transform: translateY(1px);
-}
-
 /* DISABLED */
 .footer-subscribe-btn:disabled {
   background-color: #e0e0e0;
+  opacity: 0.6;
   border-color: #e0e0e0;
   color: #888;
   cursor: not-allowed;
@@ -137,8 +150,9 @@ a[href^="tel"] {
 
 
 .footer-input {
-  width: 100%;
+  width: 85%;
   background: transparent;
+  padding: 14px 120px 14px 16px; 
   border: none;
   border-bottom: 1px solid #EFBF04;
   color: black;
@@ -151,6 +165,7 @@ a[href^="tel"] {
   color: #676767;
   margin-top: 10px;
   line-height: 1.3;
+ 
 }
 
 .footer-small-text span {
@@ -169,7 +184,8 @@ a[href^="tel"] {
   margin-top: 0px;
   flex-wrap: wrap;
   gap: 0px;
-} 
+}
+
 .footer-bottom-center {
   border-left: 1px rgb(221, 221, 221) solid;
   border-right: 1px rgb(221, 221, 221) solid;
@@ -195,6 +211,7 @@ a[href^="tel"] {
     gap: 5px;
   }
 }
+
 @media (max-width: 768px) {
   .footer {
     padding: 30px 20px;
@@ -224,6 +241,7 @@ a[href^="tel"] {
     border-right: none;
   }
 }
+
 @media (max-width: 480px) {
   .footer-logo {
     font-size: 1.5rem;
@@ -243,27 +261,29 @@ a[href^="tel"] {
   .footer-bottom {
     width: 90vw;
     padding: 0%;
-    font-size: 0.75rem; 
-    
+    font-size: 0.75rem;
+
   }
-  .footer-column-input{
-  min-width: 220px;
-}
-.footer-column-input h3{
-  text-align: center;
-  font-size: large;
-  margin-bottom: 15px;
-}
+
+  .footer-column-input {
+    min-width: 220px;
+  }
+
+  .footer-column-input h3 {
+    text-align: center;
+    font-size: large;
+    margin-bottom: 15px;
+  }
 
   .footer-bottom-left,
   .footer-bottom-right,
   .footer-bottom-center {
-  border: none;
+    border: none;
   }
+
   .footer-bottom-center {
     border-top: 1px rgb(221, 221, 221) solid;
-      border-bottom: 1px rgb(221, 221, 221) solid;
-  
+    border-bottom: 1px rgb(221, 221, 221) solid;
+
   }
 }
-

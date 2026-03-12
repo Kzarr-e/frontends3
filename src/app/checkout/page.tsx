@@ -36,12 +36,12 @@ export default function CheckoutPage() {
     pincode: "",
     phone: "",
   });
-
+  const [guestEmail, setGuestEmail] = useState("");
   const token =
     typeof window !== "undefined"
       ? localStorage.getItem("kzarre_token")
       : null;
-
+  const isGuest = !token;
   /* ================= LOAD ITEMS ================= */
   useEffect(() => {
     async function loadItems() {
@@ -123,32 +123,64 @@ export default function CheckoutPage() {
 
   /* ================= PLACE ORDER ================= */
   async function handleNext() {
-    const addr = addresses.find((a) => a._id === selectedAddressId);
-    if (!addr) return alert("Select address");
 
-    const endpoint = isBuyNow
-      ? "/api/checkout/create-order"
+    let addr;
+
+    if (isGuest) {
+
+      if (!guestEmail) {
+        return alert("Enter email");
+      }
+
+      if (!newAddress.name || !newAddress.phone || !newAddress.line1) {
+        return alert("Enter address");
+      }
+
+      addr = newAddress;
+
+    } else {
+
+      addr = addresses.find((a) => a._id === selectedAddressId);
+      if (!addr) return alert("Select address");
+
+    }
+
+    const endpoint = isGuest
+      ? "/api/checkout/create-guest-order"
       : "/api/checkout/create-order";
 
     const body = isBuyNow
       ? {
-          productId,
-          qty: items[0].quantity,
-          size: items[0].size,
-          color: items[0].color,
-          address: addr,
-        }
-      : { address: addr };
+        productId,
+        qty: items[0].quantity,
+        size: items[0].size,
+        color: items[0].color,
+        address: addr,
+        email: guestEmail,
+        items,
+      }
+      : {
+        address: addr,
+        email: guestEmail,
+        items,
+      };
+
+    const headers: any = {
+      "Content-Type": "application/json",
+    };
+
+    if (!isGuest && token) {
+      headers.Authorization = `Bearer ${token}`;
+    }
 
     const res = await fetch(`${API}${endpoint}`, {
       method: "POST",
-      credentials: "include",
-      headers: { "Content-Type": "application/json",  Authorization: `Bearer ${token}`, },
-      
+      headers,
       body: JSON.stringify(body),
     });
 
     const data = await res.json();
+
     if (!data.success) {
       alert(data.message || "Order failed");
       return;
@@ -166,71 +198,127 @@ export default function CheckoutPage() {
   /* ================= UI ================= */
   return (
     <PageLayout>
-    <div className={styles.pageWrap}>
-      <div className={styles.container}>
-        {/* LEFT */}
-        <div className={styles.left}>
-          <h2>Select delivery address</h2>
+      <div className={styles.pageWrap}>
+        <div className={styles.container}>
+          {/* LEFT */}
+          <div className={styles.left}>
+            <h2>Select delivery address</h2>
 
-          {addresses.map((a) => (
-            <div
-              key={a._id}
-              className={`${styles.addressCard} ${
-                selectedAddressId === a._id ? styles.addressCardSelected : ""
-              }`}
-              onClick={() => setSelectedAddressId(a._id)}
-            >
-              <strong>{a.title}</strong>
-              <div>{a.name}</div>
-              <div>{a.line1}</div>
-              <div>{a.phone}</div>
-            </div>
-          ))}
-
-          {showAddForm && (
-            <div className={styles.addForm}>
-              {Object.keys(newAddress).map((k) => (
+            {!isGuest &&
+              addresses.map((a) => (
+                <div
+                  key={a._id}
+                  className={`${styles.addressCard} ${selectedAddressId === a._id ? styles.addressCardSelected : ""
+                    }`}
+                  onClick={() => setSelectedAddressId(a._id)}
+                >
+                  <strong>{a.title}</strong>
+                  <div>{a.name}</div>
+                  <div>{a.line1}</div>
+                  <div>{a.phone}</div>
+                </div>
+              ))}
+            {isGuest && (
+              <div className={styles.addForm}>
                 <input
-                  key={k}
-                  placeholder={k}
-                  value={(newAddress as any)[k]}
+                  placeholder="Email"
+                  value={guestEmail}
+                  onChange={(e) => setGuestEmail(e.target.value)}
+                />
+
+                <input
+                  placeholder="Full Name"
+                  value={newAddress.name}
                   onChange={(e) =>
-                    setNewAddress({ ...newAddress, [k]: e.target.value })
+                    setNewAddress({ ...newAddress, name: e.target.value })
                   }
                 />
-              ))}
-              <button onClick={saveNewAddress}>Save</button>
-            </div>
-          )}
 
-          <button className={styles.nextBtn} onClick={handleNext}>
-            Place Order →
-          </button>
-        </div>
+                <input
+                  placeholder="Phone"
+                  value={newAddress.phone}
+                  onChange={(e) =>
+                    setNewAddress({ ...newAddress, phone: e.target.value })
+                  }
+                />
 
-        {/* RIGHT */}
-        <aside className={styles.right}>
-          <h3>Order Summary</h3>
+                <input
+                  placeholder="Address"
+                  value={newAddress.line1}
+                  onChange={(e) =>
+                    setNewAddress({ ...newAddress, line1: e.target.value })
+                  }
+                />
 
-          {items.map((item) => (
-            <div key={item.productId} className={styles.summaryItem}>
-              <Image src={item.image} alt="" width={80} height={80} />
-              <div>
-                <div className={styles.itemTitle}>{item.name}</div>
-                <div>Qty: {item.quantity}</div>
-                {item.size && <div>Size: {item.size}</div>}
-                <div>${item.price}</div>
+                <input
+                  placeholder="City"
+                  value={newAddress.city}
+                  onChange={(e) =>
+                    setNewAddress({ ...newAddress, city: e.target.value })
+                  }
+                />
+
+                <input
+                  placeholder="State"
+                  value={newAddress.state}
+                  onChange={(e) =>
+                    setNewAddress({ ...newAddress, state: e.target.value })
+                  }
+                />
+
+                <input
+                  placeholder="Pincode"
+                  value={newAddress.pincode}
+                  onChange={(e) =>
+                    setNewAddress({ ...newAddress, pincode: e.target.value })
+                  }
+                />
               </div>
-            </div>
-          ))}
+            )}
+            {showAddForm && (
+              <div className={styles.addForm}>
+                {Object.keys(newAddress).map((k) => (
+                  <input
+                    key={k}
+                    placeholder={k}
+                    value={(newAddress as any)[k]}
+                    onChange={(e) =>
+                      setNewAddress({ ...newAddress, [k]: e.target.value })
+                    }
+                  />
+                ))}
+                <button onClick={saveNewAddress}>Save</button>
+              </div>
+            )}
 
-          <div className={styles.grandTotal}>
-            <strong>Total</strong>
-            <strong>${total}</strong>
+            <button className={styles.nextBtn} onClick={handleNext}>
+              Place Order →
+            </button>
           </div>
-        </aside>
+
+          {/* RIGHT */}
+          <aside className={styles.right}>
+            <h3>Order Summary</h3>
+
+            {items.map((item) => (
+              <div key={item.productId} className={styles.summaryItem}>
+                <Image src={item.image} alt="" width={80} height={80} />
+                <div>
+                  <div className={styles.itemTitle}>{item.name}</div>
+                  <div>Qty: {item.quantity}</div>
+                  {item.size && <div>Size: {item.size}</div>}
+                  <div>${item.price}</div>
+                </div>
+              </div>
+            ))}
+
+            <div className={styles.grandTotal}>
+              <strong>Total</strong>
+              <strong>${total}</strong>
+            </div>
+          </aside>
+        </div>
       </div>
-    </div>
     </PageLayout>
   );
 }

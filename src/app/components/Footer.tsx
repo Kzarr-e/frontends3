@@ -4,7 +4,7 @@ import "./Footer.css";
 import Image from "next/image";
 import Link from "next/link";
 import logo from "../Assest/logo.png";
-
+import { ArrowRight, Loader2 } from "lucide-react";
 const Footer = () => {
   const [email, setEmail] = useState("");
   const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
@@ -55,29 +55,34 @@ const Footer = () => {
         {/* SUBSCRIBE */}
         <div className="footer-column-input">
           <h3>SUBSCRIBE TO OUR NEWSLETTER</h3>
+        <br/>
+          <div className="footer-input-wrapper">
+            <input
+              type="email"
+              placeholder="Insert Your e-mail address"
+              className="footer-input"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              disabled={status === "loading"}
+            />
 
-          <input
-            type="email"
-            placeholder="Insert Your e-mail address"
-            className="footer-input"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            disabled={status === "loading"}
-          />
-
-          <button
-            onClick={handleSubscribe}
-            className="footer-subscribe-btn"
-            disabled={status === "loading"}
-          >
-            {status === "loading" ? "Submitting..." : "Subscribe"}
-          </button>
+            <button
+              onClick={handleSubscribe}
+              className="footer-subscribe-btn"
+              disabled={status === "loading"}
+            >
+              {status === "loading" ? (
+                <Loader2 size={16} className="spin-icon" />
+              ) : (
+                  <ArrowRight size={16} />
+              )}
+            </button>
+          </div>
 
           {message && (
             <p
-              className={`footer-message ${
-                status === "success" ? "success" : "error"
-              }`}
+              className={`footer-message ${status === "success" ? "success" : "error"
+                }`}
             >
               {message}
             </p>
@@ -85,17 +90,17 @@ const Footer = () => {
 
           <p className="footer-small-text">
             By clicking on “Subscribe”, you confirm that you have read and
-            understood our <span>Privacy Statement</span>.
+            understood our <Link href="/legal"><span>Privacy Statement</span></Link>.
           </p>
         </div>
 
-         {/* Help Section */}
+        {/* Help Section */}
         <div className="footer-column">
           <h3>DO YOU NEED HELP ?</h3>
           <ul>
-           <Link href="/contact"><li>Contacts us</li></Link>
+            <Link href="/contact"><li>Contacts us</li></Link>
             <Link href="/faq"><li>FAQ</li></Link>
-            
+
           </ul>
         </div>
 
@@ -103,8 +108,8 @@ const Footer = () => {
         <div className="footer-column">
           <h3>Orders & Shipping</h3>
           <ul>
-            <Link href="/orders"><li>Start a Return</li></Link>  
-           <Link href="/shipping"><li>Shipping</li></Link>  
+            <Link href="/orders"><li>Start a Return</li></Link>
+            <Link href="/shipping"><li>Shipping</li></Link>
           </ul>
         </div>
 
@@ -113,14 +118,14 @@ const Footer = () => {
           <h3>LEGAL TERMS AND CONDITIONS</h3>
           <ul>
             <Link href="/legal"><li>Legal & Privacy</li></Link>
-              <Link href="/return-policy"><li>Return Policy</li></Link>
+            <Link href="/return-policy"><li>Return Policy</li></Link>
           </ul>
         </div> <div className="footer-column">
           <h3>About</h3>
           <ul>
-           <Link href="/about"><li>About the Brand</li></Link>
-             <Link href="/sustainability"><li>Sustainability</li></Link>
-             <Link href="/accessibility"><li>Accessibility</li></Link>
+            <Link href="/about"><li>About the Brand</li></Link>
+            <Link href="/sustainability"><li>Sustainability</li></Link>
+            <Link href="/accessibility"><li>Accessibility</li></Link>
           </ul>
         </div>
       </div>

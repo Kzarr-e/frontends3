@@ -40,6 +40,7 @@ export default function SuccessPage() {
         if (!res.ok) throw new Error("Order not found");
 
         const data = await res.json();
+        console.log("ORDER DATA:", data);
         setOrder(data.order || data); // ✅ Supports both API shapes
       } catch (err) {
         setError(err?.message || "Failed to load order");
@@ -81,14 +82,15 @@ export default function SuccessPage() {
   /* ================= ✅ SMART FIELD MAPPING ================= */
 
   const customerName =
+    order.guestName ||
     order.user?.name ||
-    order.customer?.name ||
     order.address?.name ||
     "Guest";
 
   const customerEmail =
+    order.email ||          // ✅ logged user order
+    order.guestEmail ||     // ✅ guest order
     order.user?.email ||
-    order.customer?.email ||
     order.address?.email ||
     "Not Provided";
 
@@ -136,7 +138,7 @@ export default function SuccessPage() {
         <div style={styles.section}>
           <div style={styles.row}>
             <span>Order ID</span>
-            <strong>{order._id || orderId}</strong>
+            <strong>{order.orderId || orderId}</strong>
           </div>
           <div style={styles.row}>
             <span>Order Date</span>
