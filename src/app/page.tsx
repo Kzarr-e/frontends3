@@ -1,12 +1,15 @@
 
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import dynamic from "next/dynamic";
 import Loading from './loading';
 import Cookies from "js-cookie";
 import './home.css';
 import Pagelayout from './components/PageLayout';
+import { IoPlay, IoPause, IoVolumeMute, IoVolumeHigh } from "react-icons/io5";
+import { Play, Pause, VolumeX, Volume } from "lucide-react";
+
 /* ===========================
    🔥 LAZY LOAD COMPONENTS
 =========================== */
@@ -26,6 +29,30 @@ export default function Home() {
   const [videoUrl, setVideoUrl] = useState<string | null>(null);
   const [banners, setBanners] = useState<BannersData>({});
   const [loading, setLoading] = useState(true);
+  const videoRef = useRef<HTMLVideoElement | null>(null);
+  const [isMuted, setIsMuted] = useState(true);
+  const [isPlaying, setIsPlaying] = useState(true);
+
+  const togglePlay = () => {
+    const video = videoRef.current;
+    if (!video) return;
+
+    if (video.paused) {
+      video.play();
+      setIsPlaying(true);
+    } else {
+      video.pause();
+      setIsPlaying(false);
+    }
+  };
+
+  const toggleMute = () => {
+    const video = videoRef.current;
+    if (!video) return;
+
+    video.muted = !video.muted;
+    setIsMuted(video.muted);
+  };
 
   useEffect(() => {
     const fetchCMSData = async () => {
@@ -71,54 +98,62 @@ export default function Home() {
   if (loading) return <Loading />;
 
   return (
-     <Pagelayout>
-    <>
-      {/* ===========================
+    <Pagelayout>
+      <>
+        {/* ===========================
          🎥 HERO VIDEO (OPTIMIZED)
       =========================== */}
-      <section className="hero-section">
-        {videoUrl ? (
-          <video
-            autoPlay
-            loop
-            muted
-            playsInline
-            preload="metadata"        // ✅ HUGE FIX
-            poster="/placeholder.png" // ✅ prevents blank screen
-            className="hero-video"
-          >
-            <source src={videoUrl} type="video/mp4" />
-          </video>
-        ) : (
-          <div className="no-video">
-            <p>No approved video available.</p>
-          </div>
-        )}
-      </section>
+        <div className="hero-section">
+          {videoUrl && (
+            <>
+              <video
+                ref={videoRef}
+                src={videoUrl}
+                autoPlay
+                loop
+                muted={isMuted}
+                playsInline
+                preload="metadata"
+                className="hero-video"
+              />
 
-      {/* ===========================
+              {/* Controls */}
+              <div className="video-controls">
+                <button onClick={togglePlay}>
+                  {isPlaying ? <Pause size={18} /> : <Play size={18} />}
+                </button>
+
+                <button onClick={toggleMute}>
+                  {isMuted ? <VolumeX size={18} /> : <Volume size={18} />}
+                </button>
+              </div>
+            </>
+          )}
+        </div>
+
+        {/* ===========================
          🖼 BELOW THE FOLD (LAZY)
       =========================== */}
-      <div className="banner-container banner-1">
-        <Bannerone />
-      </div>
+        <div className="banner-container banner-1">
+          <Bannerone />
+        </div>
 
-      <div className="banner-container1 banner-toggle">
-        <BannerToggle />
-      </div>
+        <div className="banner-container1 banner-toggle">
+          <BannerToggle />
+        </div>
 
-      <div className="banner-container3">
-        <Bannergridwomens />
-      </div>
+        <div className="banner-container3">
+          <Bannergridwomens />
+        </div>
 
-      <div className="banner-containe4 banner-2">
-        <Bannertwo />
-      </div>
+        <div className="banner-containe4 banner-2">
+          <Bannertwo />
+        </div>
 
-      <div className="stories-section">
-        <Stories />
-      </div>
-    </>
-    </Pagelayout>
+        <div className="stories-section">
+          <Stories />
+        </div>
+      </>
+    </Pagelayout >
   );
 }

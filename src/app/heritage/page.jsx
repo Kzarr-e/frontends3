@@ -6,6 +6,7 @@ import Link from "next/link";
 import Cookies from "js-cookie";
 import { useSearchParams, useRouter } from "next/navigation";
 import Pagelayout from "../components/PageLayout";
+import { Play, Pause, VolumeX, Volume } from "lucide-react";
 
 export default function heritagePage() {
   const [priceRange, setPriceRange] = useState({
@@ -26,6 +27,31 @@ export default function heritagePage() {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [hoveredId, setHoveredId] = useState(null);
+
+  const videoRef = useRef(null);
+  const [isMuted, setIsMuted] = useState(true);
+  const [isPlaying, setIsPlaying] = useState(true);
+
+  const togglePlay = () => {
+    const video = videoRef.current;
+    if (!video) return;
+
+    if (video.paused) {
+      video.play();
+      setIsPlaying(true);
+    } else {
+      video.pause();
+      setIsPlaying(false);
+    }
+  };
+
+  const toggleMute = () => {
+    const video = videoRef.current;
+    if (!video) return;
+
+    video.muted = !video.muted;
+    setIsMuted(video.muted);
+  };
 
   // ✅ WOMEN CMS VIDEO STATE
   const [cmsVideo, setCmsVideo] = useState(null);
@@ -98,7 +124,7 @@ export default function heritagePage() {
   }, []);
 
   /* ================= ✅ LOAD WOMEN PAGE VIDEO ================= */
-   useEffect(() => {
+  useEffect(() => {
     async function loadVideo() {
       try {
         const cachedVideo = Cookies.get("heritage_page_video");
@@ -412,8 +438,6 @@ export default function heritagePage() {
 
           <div className="filter-content">
             {/* CATEGORY */}
-
-
             {/* ================= CATEGORY ================= */}
             {dynamicFilters.categories.length > 0 && (
               <div className="filter-section">
@@ -443,7 +467,6 @@ export default function heritagePage() {
                 </div>
               </div>
             )}
-
 
             {dynamicFilters.colors.length > 0 && (
               <div className="filter-section">
@@ -630,17 +653,29 @@ export default function heritagePage() {
 
         <div className="gallery-video">
           {cmsVideo && (
-            <video
-              src={cmsVideo}
-              autoPlay
-              loop
-              muted
-              playsInline
-              preload="auto"
-              fetchPriority="high"
-              poster="/placeholder.png"
-              className="heritage-video"
-            />
+            <>
+              <video
+                ref={videoRef}
+                src={cmsVideo}
+                autoPlay
+                loop
+                muted={isMuted}
+                playsInline
+                preload="auto"
+                className="heritage-video"
+              />
+
+              {/* Controls */}
+              <div className="video-controls">
+                <button onClick={togglePlay}>
+                  {isPlaying ? <Pause size={18} /> : <Play size={18} />}
+                </button>
+
+                <button onClick={toggleMute}>
+                  {isMuted ? <VolumeX size={18} /> : <Volume size={18} />}
+                </button>
+              </div>
+            </>
           )}
         </div>
 
