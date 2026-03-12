@@ -5,7 +5,7 @@ const nextConfig = {
   output: "export",
 
   /* Required for static hosting */
-  trailingSlash: true,
+  trailingSlash: false,
 
   /* Next image optimizer does not work on S3 */
   images: {
