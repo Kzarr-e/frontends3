@@ -12,6 +12,7 @@ export async function generateStaticParams() {
     "about",
     "returns",
     "shipping",
+    "return-policy",
     "faq",
     "sustainability",
     "accessibility"
