@@ -108,7 +108,7 @@ const Footer = () => {
         <div className="footer-column">
           <h3>Orders & Shipping</h3>
           <ul>
-            <Link href="/orders"><li>Start a Return</li></Link>
+            <Link href="/order"><li>Start a Return</li></Link>
             <Link href="/shipping"><li>Shipping</li></Link>
           </ul>
         </div>

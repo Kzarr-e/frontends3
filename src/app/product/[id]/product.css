@@ -16,6 +16,7 @@
   color: #111;
   height: max-content;
 }
+
 /* ✅ Luxury Popup */
 .luxury-popup-overlay {
   position: fixed;
@@ -59,6 +60,7 @@
     transform: scale(0.85);
     opacity: 0;
   }
+
   to {
     transform: scale(1);
     opacity: 1;
@@ -109,6 +111,7 @@
   animation: cinematicFade 0.85s cubic-bezier(0, 1.06, 1, -0.01) forwards;
   will-change: opacity, transform;
 }
+
 /* ================= IMAGE ARROWS ================= */
 .main-image {
   position: relative;
@@ -141,11 +144,11 @@
 }
 
 .img-arrow.left {
-  left: 12px;
+  left: 1%;
 }
 
 .img-arrow.right {
-  right: 52px;
+  right: 5.5%;
 }
 
 /* Mobile – slightly smaller */
@@ -170,12 +173,15 @@
 @keyframes cinematicFade {
   0% {
     opacity: 0.2;
-    transform: scale(0.92); /* ✅ START SMALL */
+    transform: scale(0.92);
+    /* ✅ START SMALL */
     filter: blur(1.5px);
   }
+
   100% {
     opacity: 1;
-    transform: scale(1); /* ✅ END AT FULL */
+    transform: scale(1);
+    /* ✅ END AT FULL */
     filter: blur(0px);
   }
 }
@@ -192,9 +198,12 @@
 .luxury-line {
   position: absolute;
   bottom: 52%;
-  right: 22px; /* ✅ MOVED TO RIGHT */
-  left: auto; /* ✅ REMOVED CENTER ALIGN */
-  transform: translateY(-50%); /* ✅ RESET TRANSFORM */
+  right: 22px;
+  /* ✅ MOVED TO RIGHT */
+  left: auto;
+  /* ✅ REMOVED CENTER ALIGN */
+  transform: translateY(-50%);
+  /* ✅ RESET TRANSFORM */
   width: 3px;
   height: 40px;
   background: rgb(255, 255, 255);
@@ -230,7 +239,7 @@
 .subtitle {
   color: var(--muted);
   font-size: 0.9rem;
-  margin-bottom: 15px; 
+  margin-bottom: 15px;
   width: 600px;
   font-family: "Open Sans";
 }
@@ -259,7 +268,7 @@
 
 
 /* ================= SIZE SELECTOR ================= */
-.variant-group{
+.variant-group {
   margin-top: 1%;
   margin-left: 0.5%;
 
@@ -326,19 +335,22 @@
   }
 }
 
-.variant{
+.variant {
   margin-top: 1%;
   margin-left: 0.5%;
 }
+
 /* ================= COLOR VARIANTS ================= */
 .variant-group {
   margin-top: 20px;
 }
+
 .color-options {
   display: flex;
   gap: 14px;
   flex-wrap: wrap;
 }
+
 /* COLOR SWATCH */
 .color-swatch {
   width: 36px;
@@ -353,17 +365,16 @@
 
   transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
+
 /* INNER DEPTH (LUXURY FEEL) */
 .color-swatch::before {
   content: "";
   position: absolute;
   inset: 3px;
   border-radius: 50%;
-  background: linear-gradient(
-    to bottom right,
-    rgba(255, 255, 255, 0.35),
-    rgba(0, 0, 0, 0.15)
-  );
+  background: linear-gradient(to bottom right,
+      rgba(255, 255, 255, 0.35),
+      rgba(0, 0, 0, 0.15));
   opacity: 0.35;
   pointer-events: none;
 }
@@ -373,6 +384,7 @@
   transform: translateY(-2px);
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.18);
 }
+
 /* SELECTED – STRONG RING */
 .color-swatch.active {
   box-shadow:
@@ -381,6 +393,7 @@
     0 6px 14px rgba(0, 0, 0, 0.25);
   transform: scale(1.05);
 }
+
 /* WHITE / LIGHT COLORS FIX */
 .color-swatch.light {
   border: 1px solid #aaa;
@@ -413,7 +426,7 @@
   padding: 10px 24px;
   cursor: pointer;
   margin-top: 2%;
-  
+
 }
 
 .btn.primary {
@@ -425,7 +438,7 @@
 
 .btn.outline {
   border: 1px solid #ddd;
-  background: #fff; 
+  background: #fff;
   margin-left: 2%;
   color: black;
 }
@@ -461,6 +474,7 @@
   width: 100vw;
   background-color: #ffffff;
 }
+
 .similar-section h2 {
   margin-top: 2%;
   margin-left: 3%;
@@ -471,6 +485,7 @@
   font-weight: 550;
   text-transform: uppercase;
 }
+
 .similar-grid {
   width: 95vw;
   display: grid;
@@ -489,6 +504,7 @@
   height: 460px;
   object-fit: cover;
 }
+
 .card-title {
   margin-top: 2px;
   font-size: 0.95rem;
@@ -499,6 +515,7 @@
   text-align: center;
   color: #000000;
 }
+
 .card-price {
   margin-top: 3px;
   font-size: 1.1rem;
@@ -511,7 +528,8 @@
 
 @media (max-width: 1024px) {
   .product-top {
-    grid-template-columns: 1fr 1fr; /* Balanced luxury split */
+    grid-template-columns: 1fr;
+    /* ✅ Full vertical luxury stack */
   }
 
   .luxury-scroll {
@@ -547,7 +565,9 @@
   .card {
     height: auto;
   }
-
+  .img-arrow.right {
+    right: 1%;
+  }
   .card-image img {
     height: 360px;
   }
@@ -562,7 +582,8 @@
   }
 
   .product-top {
-    grid-template-columns: 1fr; /* ✅ Full vertical luxury stack */
+    grid-template-columns: 1fr;
+    /* ✅ Full vertical luxury stack */
   }
 
   .gallery-col {
@@ -578,7 +599,8 @@
   }
 
   .luxury-line {
-    display: none; /* ✅ Clean mobile appearance */
+    display: none;
+    /* ✅ Clean mobile appearance */
   }
 
   .info-col {
@@ -629,7 +651,7 @@
   }
 
   .similar-grid {
-    grid-template-columns: repeat(2, 1fr); 
+    grid-template-columns: repeat(2, 1fr);
     gap: 20px;
     width: 100vw;
     padding: 3%;
@@ -647,6 +669,10 @@
 
   .card-price {
     font-size: 1rem;
+  }
+
+  .img-arrow.right {
+    right: 1%;
   }
 }
 
@@ -666,13 +692,13 @@
 
   .info-col {
     padding: 28px 28px;
-    
+
   }
 
   .product-title {
     font-size: 0.95rem;
     letter-spacing: 0.04em;
-  } 
+  }
 
 
   .btn.outline {
@@ -686,22 +712,28 @@
 
   .sizes {
     flex-wrap: wrap;
-    gap: 10px; 
+    gap: 10px;
     color: black;
+  }
+
+  .img-arrow.right {
+    right: 1.5%;
   }
 
   .btn.primary {
     font-size: 0.9rem;
   }
- .similar-section h2 {
+
+  .similar-section h2 {
     font-size: 1rem;
-    
+
     margin-top: 4%;
     margin-bottom: 2%;
     text-align: center;
   }
+
   .similar-grid {
-    grid-template-columns: repeat(2, 1fr); 
+    grid-template-columns: repeat(2, 1fr);
     gap: 20px;
     width: 100vw;
     padding: 3%;

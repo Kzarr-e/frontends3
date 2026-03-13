@@ -250,8 +250,6 @@ export default function ProductPage({ id }) {
     }
   };
 
-
-
   /* ================= IMAGE SWIPE ================= */
   const handleTouchStart = (e) => {
     touchStartY.current = e.touches[0].clientY;
@@ -299,8 +297,6 @@ export default function ProductPage({ id }) {
       (i + 1) % product.gallery.length
     );
   };
-
-
   return (
     <Pagelayout>
       <main className="product-page">
@@ -481,7 +477,6 @@ export default function ProductPage({ id }) {
         {Array.isArray(similar) && similar.length > 0 && (
           <section className="similar-section">
             <h2>Similar Products</h2>
-
             <div className="similar-grid">
               {similar.map((p) => {
                 const img =
