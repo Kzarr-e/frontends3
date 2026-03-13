@@ -50,7 +50,7 @@ const Footer = () => {
           <Image src={logo} alt="KZARRĒ Logo" className="logo-img" />
         </Link>
       </div>
-
+ {/* fa */}
       <div className="footer-content">
         {/* SUBSCRIBE */}
         <div className="footer-column-input">
