@@ -15,16 +15,20 @@ interface CartItem {
   price: number;
   quantity: number;
   size?: string;
+  color?: string;
 }
 
 export default function BagSection() {
   const router = useRouter();
+
 
   const [cart, setCart] = useState<CartItem[]>([]);
   const [loading, setLoading] = useState(true);
   const token = typeof window !== "undefined"
     ? localStorage.getItem("kzarre_token")
     : null;
+
+  const isGuest = !token;
   /* =========================
      FETCH CART
   ========================= */
@@ -32,8 +36,25 @@ export default function BagSection() {
     fetchCart();
   }, []);
 
+  useEffect(() => {
+    const handler = () => fetchCart();
+
+    window.addEventListener("cartUpdated", handler);
+
+    return () => window.removeEventListener("cartUpdated", handler);
+  }, []);
+
   const fetchCart = async () => {
     try {
+      if (isGuest) {
+        // ✅ LOAD FROM LOCALSTORAGE
+        const localCart = JSON.parse(localStorage.getItem("cart") || "[]");
+        setCart(localCart);
+        setLoading(false);
+        return;
+      }
+
+      // ✅ USER CART (API)
       const res = await fetch(`${API}/api/cart`, {
         headers: {
           "Content-Type": "application/json",
@@ -58,20 +79,63 @@ export default function BagSection() {
   /* =========================
      UPDATE QTY
   ========================= */
-  const updateQty = async (productId: string, qty: number) => {
+  const updateQty = async (
+    productId: string,
+    qty: number,
+    size?: string,
+    color?: string
+  ) => {
     if (qty < 1) return;
 
-    try {
-      await fetch(`${API}/api/cart/update`, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify({ productId, quantity: qty }),
-      });
+    // 🔥 LIMIT PER ITEM
+    if (qty > 5) {
+      alert("Max 5 allowed per item");
+      return;
+    }
 
-      fetchCart();
+    try {
+      if (isGuest) {
+        const localCart = JSON.parse(localStorage.getItem("cart") || "[]");
+
+        // 🔥 TOTAL CART LIMIT
+        const totalQty = localCart.reduce((sum, i) => sum + i.quantity, 0);
+        const currentItem = localCart.find(
+          (i) =>
+            i.productId === productId &&
+            i.size === size &&
+            i.color === color
+        );
+
+        const otherQty = totalQty - (currentItem?.quantity || 0);
+
+        if (otherQty + qty > 20) {
+          alert("Cart limit is 20 items");
+          return;
+        }
+
+        const updated = localCart.map((item) =>
+          item.productId === productId &&
+            item.size === size &&
+            item.color === color
+            ? { ...item, quantity: qty }
+            : item
+        );
+
+        localStorage.setItem("cart", JSON.stringify(updated));
+        setCart(updated);
+      } else {
+        // (same logic ideally backend too)
+        await fetch(`${API}/api/cart/update`, {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify({ productId, quantity: qty }),
+        });
+
+        fetchCart();
+      }
     } catch (err) {
       console.error("Update failed", err);
     }
@@ -80,17 +144,39 @@ export default function BagSection() {
   /* =========================
      REMOVE ITEM
   ========================= */
-  const removeItem = async (productId: string) => {
+  const removeItem = async (productId: string, size?: string,
+    color?: string) => {
     try {
-      await fetch(`${API}/api/cart/remove/${productId}`, {
-        method: "DELETE",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      if (isGuest) {
+        const localCart = JSON.parse(localStorage.getItem("cart") || "[]");
 
-      fetchCart();
+        const updated = localCart.filter(
+          (item) =>
+            !(
+              item.productId === productId &&
+              item.size === size &&
+              item.color === color
+            )
+        );
+
+        localStorage.setItem("cart", JSON.stringify(updated));
+        setCart(updated);
+      } else {
+        await fetch(`${API}/api/cart/remove`, {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify({
+            productId,
+            size,
+            color,
+          }),
+        });
+
+        fetchCart();
+      }
     } catch (err) {
       console.error("Remove failed", err);
     }
@@ -111,6 +197,8 @@ export default function BagSection() {
     0
   );
 
+
+
   if (loading) {
     return <p style={{ padding: 40 }}>Loading cart...</p>;
   }
@@ -123,50 +211,79 @@ export default function BagSection() {
           <div className={styles.left}>
             {cart.length === 0 && <p>Your cart is empty</p>}
 
-            {cart.map((item) => (
-              <div
-                key={`${item.productId}-${item.size || "default"}`}
-                className={styles.cartItem}
-              >
-                <div className={styles.itemImg}>
-                  <img
-                    src={item.image}
-                    alt={item.name}
-                    width={100}
-                    height={100}
-                  />
-                </div>
+            {cart.map((item) => {
+              const isMax = item.quantity >= 5;
 
-                <div className={styles.itemInfo}>
-                  <h3>{item.name}</h3>
-                  {item.description && <p>{item.description}</p>}
-
-                  <p className={styles.price}>${item.price}</p>
-
-                  <div className={styles.details}>
-                    <span>Size: {item.size || "M"}</span>
-                    <span>
-                      Qty:
-                      <input
-                        type="number"
-                        min={1}
-                        value={item.quantity}
-                        onChange={(e) =>
-                          updateQty(item.productId, Number(e.target.value))
-                        }
-                      />
-                    </span>
-                  </div>
-                </div>
-
-                <button
-                  className={styles.deleteBtn}
-                  onClick={() => removeItem(item.productId)}
+              return (
+                <div
+                  key={`${item.productId}-${item.size}-${item.color}`}
+                  className={styles.cartItem}
                 >
-                  <FiTrash2 size={18} />
-                </button>
-              </div>
-            ))}
+                  <div className={styles.itemImg}>
+                    <img
+                      src={item.image}
+                      alt={item.name}
+                      width={100}
+                      height={100}
+                    />
+                  </div>
+
+                  <div className={styles.itemInfo}>
+                    <h3>{item.name}</h3>
+                    
+                    {item.description && <p>{item.description}</p>}
+
+                    <p className={styles.price}>${item.price}</p>
+
+                    <div className={styles.details}>
+                      <span>Size: {item.size || ""}</span>
+                      <span>Color: {item.color || ""}</span>
+
+                      <span>
+                        Qty:
+                        <input
+                          type="number"
+                          min={1}
+                          max={5}
+                          value={item.quantity}
+                          title={isMax ? "Max 5 per item" : ""}
+                          onChange={(e) => {
+                            let value = Number(e.target.value);
+
+                            // 🔥 clamp value between 1 and 5
+                            if (value > 5) value = 5;
+                            if (value < 1) value = 1;
+
+                            updateQty(
+                              item.productId,
+                              value,
+                              item.size,
+                              item.color
+                            );
+                          }}
+                        />
+                      </span>
+                    </div>
+
+                    {/* ✅ OPTIONAL UX */}
+                    {isMax && (
+                      <p style={{ color: "red", fontSize: "12px" }}>
+                        Max 5 per item
+                      </p>
+                    )}
+                  </div>
+
+                  <button
+                    className={styles.deleteBtn}
+                    onClick={() =>
+                      removeItem(item.productId, item.size, item.color)
+                    }
+                  >
+                    <FiTrash2 size={18} />
+                  </button>
+                </div>
+              );
+            })}
           </div>
 
           {/* RIGHT */}

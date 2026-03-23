@@ -32,40 +32,39 @@ export default function SettingsPage() {
   }
 
   return (
-<PageLayout>
-    <div className={styles.pageWrap}>
-      <div className={styles.container}>
-       <SidebarNav active="profile" />
-        <main className={styles.content}>
-          <h2 className={styles.sectionTitle}>Settings</h2>
+    <PageLayout>
+      <div className={styles.pageWrap}>
+        <div className={styles.container}>
+          <SidebarNav active="profile" />
+          <main className={styles.content}>
+            <h2 className={styles.sectionTitle}>Settings</h2>
 
-          <div className={styles.card}>
-            {/* LEFT SIDE */}
-            <div className={styles.cardLeft}>
-              <Lock size={20} className={styles.icon} />
-              <div>
-                <h4 className={styles.cardTitle}>Sign out everywhere</h4>
-                <p className={styles.cardText}>
-                  If you’ve lost a device or have security concerns, log out
-                  everywhere to ensure your account security.
+            <div className={styles.card}>
+              {/* LEFT SIDE */}
+              <div className={styles.cardLeft}>
+                <Lock size={20} className={styles.icon} />
+                <div>
+                  <h4 className={styles.cardTitle}>Log out</h4>
+                  <p className={styles.cardText}>
+                    Securely log out of your account on this device. This helps protect your data, especially when using shared or public devices.
+                  </p>
+                </div>
+              </div>
+
+              {/* RIGHT SIDE */}
+              <div className={styles.cardRight}>
+                <button className={styles.signOutBtn} onClick={handleLogout}>
+                  Log out
+                </button>
+                <p className={styles.note}>
+                  You’ll be logged out from this device only
                 </p>
               </div>
             </div>
+          </main>
 
-            {/* RIGHT SIDE */}
-            <div className={styles.cardRight}>
-              <button className={styles.signOutBtn} onClick={handleLogout}>
-                Sign out
-              </button>
-              <p className={styles.note}>
-                You’ll also be signed out on this device
-              </p>
-            </div>
-          </div>
-        </main>
-
+        </div>
       </div>
-    </div>
-</PageLayout>
+    </PageLayout>
   );
 }

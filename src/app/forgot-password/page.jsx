@@ -1,6 +1,7 @@
 "use client";
 import { useState } from "react";
 import styles from "./auth.module.css";
+import { useRouter } from "next/navigation";
 
 export default function ForgotPasswordOtp() {
   const [step, setStep] = useState(1);
@@ -9,6 +10,7 @@ export default function ForgotPasswordOtp() {
   const [newPassword, setNewPassword] = useState("");
   const [msg, setMsg] = useState("");
   const [loading, setLoading] = useState(false);
+  const router = useRouter();
 
   // ✅ STEP 1: REQUEST OTP VIA EMAIL (REAL)
   const requestOtp = async (e) => {
@@ -68,29 +70,40 @@ export default function ForgotPasswordOtp() {
   };
 
   // ✅ STEP 3: RESET PASSWORD WITH EMAIL OTP
-  const resetPassword = async (e) => {
-    e.preventDefault();
-    setLoading(true);
-    setMsg("");
+const resetPassword = async (e) => {
+  e.preventDefault();
+  setLoading(true);
+  setMsg("");
 
-    try {
-      const res = await fetch(
-        `${process.env.NEXT_PUBLIC_BACKEND_API_URL}/api/email-otp-password/reset-password`,
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ email, otp, newPassword }),
-        }
-      );
+  try {
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_BACKEND_API_URL}/api/email-otp-password/reset-password`,
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, otp, newPassword }),
+      }
+    );
 
-      const data = await res.json();
-      setMsg(data.message || "Password updated successfully");
-    } catch (err) {
-      setMsg("Password reset failed.");
-    } finally {
-      setLoading(false);
+    const data = await res.json();
+
+    if (data.success) {
+      setMsg("Password updated successfully ✅");
+
+      // 🔥 Redirect after 1.5 sec (better UX)
+      setTimeout(() => {
+        router.push("/login"); // change path if needed
+      }, 1500);
+
+    } else {
+      setMsg(data.message || "Password reset failed.");
     }
-  };
+  } catch (err) {
+    setMsg("Password reset failed.");
+  } finally {
+    setLoading(false);
+  }
+};
 
   return (
     <div className={styles.authWrapper}>

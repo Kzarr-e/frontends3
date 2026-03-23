@@ -31,9 +31,10 @@ export default function CheckoutPage() {
     title: "",
     name: "",
     line1: "",
+    line2: "",
     city: "",
     state: "",
-    pincode: "",
+    zip: "",
     phone: "",
   });
   const [guestEmail, setGuestEmail] = useState("");
@@ -47,7 +48,7 @@ export default function CheckoutPage() {
     async function loadItems() {
       try {
         if (isBuyNow) {
-          // 🔥 BUY NOW
+
           const res = await fetch(`${API}/api/products/${productId}`);
           const data = await res.json();
           const p = data.product;
@@ -63,13 +64,23 @@ export default function CheckoutPage() {
               color: colorFromUrl,
             },
           ]);
-        } else {
-          // 🔥 CART
-          const res = await fetch(`${API}/api/cart`, {
-            credentials: "include",
-          });
-          const data = await res.json();
-          setItems(data.items || []);
+        } else { 
+          if (isGuest) {
+            // ✅ LOAD FROM LOCAL STORAGE
+            const localCart = JSON.parse(localStorage.getItem("cart") || "[]");
+            setItems(localCart);
+          } else {
+            // ✅ LOAD FROM API
+            const res = await fetch(`${API}/api/cart`, {
+              headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`,
+              },
+            });
+
+            const data = await res.json();
+            setItems(data.items || []);
+          }
         }
       } catch (err) {
         console.error("Load items failed", err);
@@ -131,12 +142,22 @@ export default function CheckoutPage() {
       if (!guestEmail) {
         return alert("Enter email");
       }
-
-      if (!newAddress.name || !newAddress.phone || !newAddress.line1) {
-        return alert("Enter address");
+      if (
+        !newAddress.name ||
+        !newAddress.phone ||
+        !newAddress.line1 ||
+        !newAddress.city ||
+        !newAddress.state ||
+        !newAddress.zip
+      ) {
+        return alert("Please fill all required fields");
       }
 
-      addr = newAddress;
+      addr = {
+        ...newAddress,
+        zip: newAddress.zip,
+        line2: newAddress.line2 || "",
+      };
 
     } else {
 
@@ -214,7 +235,14 @@ export default function CheckoutPage() {
                 >
                   <strong>{a.title}</strong>
                   <div>{a.name}</div>
-                  <div>{a.line1}</div>
+                  <div>
+                    {a.line1}
+                    {a.line2 && `, ${a.line2}`}
+                  </div>
+
+                  <div>
+                    {a.city}, {a.state} {a.zip}
+                  </div>
                   <div>{a.phone}</div>
                 </div>
               ))}
@@ -243,10 +271,17 @@ export default function CheckoutPage() {
                 />
 
                 <input
-                  placeholder="Address"
+                  placeholder="Street Address"
                   value={newAddress.line1}
                   onChange={(e) =>
                     setNewAddress({ ...newAddress, line1: e.target.value })
+                  }
+                />
+                <input
+                  placeholder="Apartment / Suite / Unit (optional)"
+                  value={newAddress.line2}
+                  onChange={(e) =>
+                    setNewAddress({ ...newAddress, line2: e.target.value })
                   }
                 />
 
@@ -267,10 +302,10 @@ export default function CheckoutPage() {
                 />
 
                 <input
-                  placeholder="Pincode"
-                  value={newAddress.pincode}
+                  placeholder="ZIP Code"
+                  value={newAddress.zip}
                   onChange={(e) =>
-                    setNewAddress({ ...newAddress, pincode: e.target.value })
+                    setNewAddress({ ...newAddress, zip: e.target.value })
                   }
                 />
               </div>

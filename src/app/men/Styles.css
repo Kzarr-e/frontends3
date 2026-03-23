@@ -555,7 +555,7 @@
 .notify-overlay-parent {
   position: relative;
   width: 100%;
-
+  
 }
 
 /* ✅ Overlay button centered on image */
@@ -563,7 +563,7 @@
   position: absolute;
   bottom: 2%;
   /* move up/down if needed */
-  left: 70%;
+  right: 5%;
   background: rgb(0, 0, 0);
   color: #ffffff;
   padding: 8px 14px;
@@ -735,7 +735,9 @@
     width: 100%;
     height: auto;
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(2, 1fr); 
+    gap: 14px;
+
     /* ✅ DESKTOP = 4 */
     gap: 0px;
     justify-items: center;
@@ -750,7 +752,8 @@
   }
 
   .img-wrapper {
-    height: 20%;
+   width: 100%;
+  height: 300px;
     padding: 0px 10px;
   }
 
@@ -773,6 +776,7 @@
 
   .gallery-item img {
     height: 100%;
+    object-fit: fill;
   }
 
   .video-controls {

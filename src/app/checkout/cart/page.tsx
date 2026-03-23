@@ -42,18 +42,29 @@ export default function CartCheckoutPage() {
       ? localStorage.getItem("kzarre_token")
       : null;
 
+  const isGuest = !token;
   /* =========================
      LOAD CART (🔥 IMPORTANT)
   ========================= */
   useEffect(() => {
     async function loadCart() {
       try {
-        const res = await fetch(`${API}/api/cart`, {
-          credentials: "include",
-        });
+        if (isGuest) {
+          // 🔥 LOCAL STORAGE CART
+          const localCart = JSON.parse(localStorage.getItem("cart") || "[]");
+          setCart(localCart);
+        } else {
+          // 🔥 USER CART (DB)
+          const res = await fetch(`${API}/api/cart`, {
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${token}`,
+            },
+          });
 
-        const data = await res.json();
-        setCart(data.items || []);
+          const data = await res.json();
+          setCart(data.items || []);
+        }
       } finally {
         setLoading(false);
       }
@@ -117,11 +128,31 @@ export default function CartCheckoutPage() {
       return;
     }
 
-    const res = await fetch(`${API}/api/checkout/create-from-cart`, {
+    const endpoint = isGuest
+      ? "/api/checkout/create-guest-order"
+      : "/api/checkout/create-from-cart";
+
+    const body = isGuest
+      ? {
+        address: newAddress,
+        items: cart,
+      }
+      : {
+        address: addr,
+      };
+
+    const headers: any = {
+      "Content-Type": "application/json",
+    };
+
+    if (!isGuest && token) {
+      headers.Authorization = `Bearer ${token}`;
+    }
+
+    const res = await fetch(`${API}${endpoint}`, {
       method: "POST",
-      credentials: "include",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ address: addr }),
+      headers,
+      body: JSON.stringify(body),
     });
 
     const data = await res.json();
@@ -130,7 +161,10 @@ export default function CartCheckoutPage() {
       alert(data.message || "Order failed");
       return;
     }
-
+    // 🔥 CLEAR GUEST CART HERE
+    if (isGuest) {
+      localStorage.removeItem("cart");
+    }
     router.push(`/payment?order=${data.orderId}`);
   }
 
@@ -155,9 +189,8 @@ export default function CartCheckoutPage() {
           {addresses.map((a) => (
             <div
               key={a._id}
-              className={`${styles.addressCard} ${
-                selectedAddressId === a._id ? styles.addressCardSelected : ""
-              }`}
+              className={`${styles.addressCard} ${selectedAddressId === a._id ? styles.addressCardSelected : ""
+                }`}
               onClick={() => setSelectedAddressId(a._id)}
             >
               <strong>{a.title}</strong>

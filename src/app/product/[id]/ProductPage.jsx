@@ -13,6 +13,7 @@ import "./product.css";
 import { addToCart } from "../../utils/addToCart";
 import { IoChevronBack, IoChevronForward } from "react-icons/io5";
 import Pagelayout from "../../components/PageLayout";
+
 /* ==================== HELPERS ==================== */
 function formatPrice(num) {
   return Number(num).toLocaleString("en-US");
@@ -33,7 +34,7 @@ export default function ProductPage({ id }) {
   const [product, setProduct] = useState(null);
   const [similar, setSimilar] = useState([]);
   const [loading, setLoading] = useState(true);
-
+  const [added, setAdded] = useState(false);
   const [selectedSize, setSelectedSize] = useState("");
   const [selectedColor, setSelectedColor] = useState("");
   const [adding, setAdding] = useState(false);
@@ -44,7 +45,23 @@ export default function ProductPage({ id }) {
   const touchStartY = useRef(0);
   const [subscribed, setSubscribed] = useState(false);
 
+  const cart = typeof window !== "undefined"
+    ? JSON.parse(localStorage.getItem("cart") || "[]")
+    : [];
 
+  const currentItem = cart.find(
+    (i) =>
+      i.productId === product?._id &&
+      i.size === selectedSize &&
+      i.color === selectedColor
+  );
+
+  const currentQty = currentItem?.quantity || 0;
+
+  const totalQty = cart.reduce((sum, i) => sum + i.quantity, 0);
+
+  const isItemMax = currentQty >= 5;
+  const isCartMax = totalQty >= 20;
   /* ================= FETCH PRODUCT ================= */
   useEffect(() => {
     if (!id) return;
@@ -180,15 +197,68 @@ export default function ProductPage({ id }) {
 
     setAdding(true);
 
-    await addToCart({
-      _id: product._id,
+    const token = localStorage.getItem("kzarre_token");
+    const isGuest = !token;
+
+    const item = {
+      productId: product._id,
       name: product.name,
       price: product.discountPrice || product.price,
       image: product.imageUrl,
+      quantity: 1,
       size: selectedSize,
       color: selectedColor,
-      qty: 1,
-    });
+    };
+
+    if (isGuest) {
+      // 🔥 LOCAL STORAGE CART
+      const existing = JSON.parse(localStorage.getItem("cart") || "[]");
+
+      const found = existing.find(
+        (i) =>
+          i.productId === item.productId &&
+          i.size === item.size &&
+          i.color === item.color
+      );
+      // 🔥 PER ITEM LIMIT
+      if (found) {
+        if (found.quantity >= 5) {
+          return alert("Max 5 allowed per item");
+        }
+        found.quantity += 1;
+      } else {
+        existing.push(item);
+      }
+
+      localStorage.setItem("cart", JSON.stringify(existing));
+      setAdded(true);
+
+      // trigger cart update event
+      window.dispatchEvent(new Event("cartUpdated"));
+
+      setTimeout(() => {
+        setAdded(false);
+      }, 1500);
+    } else {
+      // 🔥 API CART (LOGGED IN)
+      await addToCart({
+        _id: product._id,
+        name: product.name,
+        price: product.discountPrice || product.price,
+        image: product.imageUrl,
+        size: selectedSize,
+        color: selectedColor,
+        qty: 1,
+      });
+
+      // ✅ ADD FEEDBACK SAME AS GUEST
+      setAdded(true);
+      window.dispatchEvent(new Event("cartUpdated"));
+
+      setTimeout(() => {
+        setAdded(false);
+      }, 1500);
+    }
 
     setAdding(false);
   };
@@ -206,8 +276,14 @@ export default function ProductPage({ id }) {
 
   const handleNotify = async () => {
     try {
-      if (!selectedSize) return alert("Please select a size");
-      if (!selectedColor) return alert("Please select a color");
+      // ✅ Only validate if options exist
+      if (product?.sizes?.length > 0 && !selectedSize) {
+        return alert("Please select a size");
+      }
+
+      if (product?.colors?.length > 0 && !selectedColor) {
+        return alert("Please select a color");
+      }
 
       const API_URL = process.env.NEXT_PUBLIC_BACKEND_API_URL;
 
@@ -403,11 +479,24 @@ export default function ProductPage({ id }) {
                   </button>
 
                   <button
-                    className="btn outline"
+                    className={`btn outline ${isItemMax || isCartMax ? "disabledBtn" : ""}`}
                     onClick={handleAddToCart}
-                    disabled={adding}
+                    disabled={adding || isItemMax || isCartMax}
+                    title={
+                      isCartMax
+                        ? "Cart limit reached (20 items)"
+                        : isItemMax
+                          ? "Max 5 per item"
+                          : "Add to cart"
+                    }
                   >
-                    Cart
+                    {isCartMax
+                      ? "Cart Full"
+                      : isItemMax
+                        ? "Max Reached"
+                        : adding
+                          ? "Adding..."
+                          : "Add to Cart"}
                   </button>
                 </>
               ) : (
@@ -420,17 +509,32 @@ export default function ProductPage({ id }) {
                       >
                         Buy Now
                       </button>
-
                       <button
-                        className="btn outline"
+                        className={`btn outline ${isItemMax || isCartMax ? "disabledBtn" : ""}`}
                         onClick={handleAddToCart}
-                        disabled={adding}
+                        disabled={adding || isItemMax || isCartMax}
+                        title={
+                          isCartMax
+                            ? "Cart limit reached (20 items)"
+                            : isItemMax
+                              ? "Max 5 per item"
+                              : "Add to cart"
+                        }
                       >
-                        Cart
+                        {isCartMax
+                          ? "Cart Full"
+                          : isItemMax
+                            ? "Max Reached"
+                            : adding
+                              ? "Adding..."
+                              : "Add to Cart"}
                       </button>
                     </>
                   ) : (
                     <>
+                      <p className="out-stock">
+                        This product is currently out of stock
+                      </p>
                       <button
                         className="btn outline"
                         onClick={handleNotify}
@@ -443,9 +547,7 @@ export default function ProductPage({ id }) {
                         {subscribed ? "Subscribed" : "Notify Me"}
                       </button>
 
-                      <p className="out-stock">
-                        This product is currently out of stock
-                      </p>
+
                     </>
                   )}
                 </div>
@@ -453,6 +555,7 @@ export default function ProductPage({ id }) {
               )}
             </div>
             <div className="variant-group">
+              
               <button
                 onClick={() => {
                   navigator.clipboard.writeText(window.location.href);
@@ -465,9 +568,10 @@ export default function ProductPage({ id }) {
                   display: "flex",
                   alignItems: "center",
                   justifyContent: "center",
+                  color: "black",
                 }}
-              >
-                <Forward size={18} />
+              > 
+                 <Forward size={18} />
               </button>
             </div>
           </aside>
