@@ -168,7 +168,7 @@ export default function ProductPage({ id }) {
 
     return {
       sizes: Array.from(sizesSet),
-      colors: Array.from(colorsSet), // ✅ UNIQUE COLORS
+      colors: Array.from(colorsSet), 
       sizeColorMap,
     };
   }, [product]);
@@ -211,7 +211,7 @@ export default function ProductPage({ id }) {
     };
 
     if (isGuest) {
-      // 🔥 LOCAL STORAGE CART
+
       const existing = JSON.parse(localStorage.getItem("cart") || "[]");
 
       const found = existing.find(
@@ -220,7 +220,6 @@ export default function ProductPage({ id }) {
           i.size === item.size &&
           i.color === item.color
       );
-      // 🔥 PER ITEM LIMIT
       if (found) {
         if (found.quantity >= 5) {
           return alert("Max 5 allowed per item");
@@ -240,7 +239,7 @@ export default function ProductPage({ id }) {
         setAdded(false);
       }, 1500);
     } else {
-      // 🔥 API CART (LOGGED IN)
+
       await addToCart({
         _id: product._id,
         name: product.name,
@@ -251,7 +250,6 @@ export default function ProductPage({ id }) {
         qty: 1,
       });
 
-      // ✅ ADD FEEDBACK SAME AS GUEST
       setAdded(true);
       window.dispatchEvent(new Event("cartUpdated"));
 
@@ -276,7 +274,7 @@ export default function ProductPage({ id }) {
 
   const handleNotify = async () => {
     try {
-      // ✅ Only validate if options exist
+
       if (product?.sizes?.length > 0 && !selectedSize) {
         return alert("Please select a size");
       }
