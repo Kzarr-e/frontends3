@@ -48,7 +48,9 @@ export default function BagSection() {
     try {
       if (isGuest) {
         // ✅ LOAD FROM LOCALSTORAGE
-        const localCart = JSON.parse(localStorage.getItem("cart") || "[]");
+        const localCart: CartItem[] = JSON.parse(
+          localStorage.getItem("cart") || "[]"
+        );
         setCart(localCart);
         setLoading(false);
         return;
@@ -95,7 +97,9 @@ export default function BagSection() {
 
     try {
       if (isGuest) {
-        const localCart = JSON.parse(localStorage.getItem("cart") || "[]");
+        const localCart: CartItem[] = JSON.parse(
+          localStorage.getItem("cart") || "[]"
+        );
 
         // 🔥 TOTAL CART LIMIT
         const totalQty = localCart.reduce((sum, i) => sum + i.quantity, 0);
@@ -148,7 +152,9 @@ export default function BagSection() {
     color?: string) => {
     try {
       if (isGuest) {
-        const localCart = JSON.parse(localStorage.getItem("cart") || "[]");
+        const localCart: CartItem[] = JSON.parse(
+  localStorage.getItem("cart") || "[]"
+);
 
         const updated = localCart.filter(
           (item) =>
@@ -230,7 +236,7 @@ export default function BagSection() {
 
                   <div className={styles.itemInfo}>
                     <h3>{item.name}</h3>
-                    
+
                     {item.description && <p>{item.description}</p>}
 
                     <p className={styles.price}>${item.price}</p>
