@@ -21,7 +21,7 @@ interface CartItem {
 export default function BagSection() {
   const router = useRouter();
 
-
+  const [toast, setToast] = useState<string | null>(null);
   const [cart, setCart] = useState<CartItem[]>([]);
   const [loading, setLoading] = useState(true);
   const token = typeof window !== "undefined"
@@ -78,6 +78,13 @@ export default function BagSection() {
     }
   };
 
+  const showToast = (message: string) => {
+    setToast(message);
+
+    setTimeout(() => {
+      setToast(null);
+    }, 2500);
+  };
   /* =========================
      UPDATE QTY
   ========================= */
@@ -127,6 +134,7 @@ export default function BagSection() {
 
         localStorage.setItem("cart", JSON.stringify(updated));
         setCart(updated);
+        showToast("Cart updated ");
       } else {
         // (same logic ideally backend too)
         await fetch(`${API}/api/cart/update`, {
@@ -153,8 +161,8 @@ export default function BagSection() {
     try {
       if (isGuest) {
         const localCart: CartItem[] = JSON.parse(
-  localStorage.getItem("cart") || "[]"
-);
+          localStorage.getItem("cart") || "[]"
+        );
 
         const updated = localCart.filter(
           (item) =>
@@ -167,6 +175,7 @@ export default function BagSection() {
 
         localStorage.setItem("cart", JSON.stringify(updated));
         setCart(updated);
+showToast("Item removed ");
       } else {
         await fetch(`${API}/api/cart/remove`, {
           method: "DELETE",
@@ -186,7 +195,7 @@ export default function BagSection() {
     } catch (err) {
       console.error("Remove failed", err);
     }
-  };
+  };  
 
   /* =========================
      GO TO CHECKOUT (NO ORDER CREATE)
@@ -213,6 +222,11 @@ export default function BagSection() {
     <PageLayout>
       <>
         <section className={styles.cartContainer}>
+          {toast && (
+  <div className={styles.toast}>
+    {toast}
+  </div>
+)}
           {/* LEFT */}
           <div className={styles.left}>
             {cart.length === 0 && <p>Your cart is empty</p>}

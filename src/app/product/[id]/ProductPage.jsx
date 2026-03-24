@@ -32,6 +32,7 @@ export default function ProductPage({ id }) {
 
   /* ================= STATE ================= */
   const [product, setProduct] = useState(null);
+  const [toast, setToast] = useState(null);
   const [similar, setSimilar] = useState([]);
   const [loading, setLoading] = useState(true);
   const [added, setAdded] = useState(false);
@@ -55,7 +56,13 @@ export default function ProductPage({ id }) {
       i.size === selectedSize &&
       i.color === selectedColor
   );
+  const showToast = (message) => {
+    setToast(message);
 
+    setTimeout(() => {
+      setToast(null);
+    }, 2500);
+  };
   const currentQty = currentItem?.quantity || 0;
 
   const totalQty = cart.reduce((sum, i) => sum + i.quantity, 0);
@@ -168,7 +175,7 @@ export default function ProductPage({ id }) {
 
     return {
       sizes: Array.from(sizesSet),
-      colors: Array.from(colorsSet), 
+      colors: Array.from(colorsSet),
       sizeColorMap,
     };
   }, [product]);
@@ -190,10 +197,10 @@ export default function ProductPage({ id }) {
     }
   }, [selectedSize, availableColors, selectedColor]);
 
-  /* ================= ADD TO CART ================= */
+  /* ================= ADD TO BAG ================= */
   const handleAddToCart = async () => {
-    if (!selectedSize) return alert("Select size");
-    if (!selectedColor) return alert("Select color");
+    if (!selectedSize) return showToast("Select size");
+    if (!selectedColor) return showToast("Select color");
 
     setAdding(true);
 
@@ -231,6 +238,7 @@ export default function ProductPage({ id }) {
 
       localStorage.setItem("cart", JSON.stringify(existing));
       setAdded(true);
+      showToast("Added to Bag");
 
       // trigger cart update event
       window.dispatchEvent(new Event("cartUpdated"));
@@ -373,6 +381,7 @@ export default function ProductPage({ id }) {
   };
   return (
     <Pagelayout>
+      {toast && <div className="toast">{toast}</div>}
       <main className="product-page">
         <div className="product-top">
           {/* IMAGE */}
@@ -485,7 +494,7 @@ export default function ProductPage({ id }) {
                         ? "Cart limit reached (20 items)"
                         : isItemMax
                           ? "Max 5 per item"
-                          : "Add to cart"
+                          : "Add to Bag"
                     }
                   >
                     {isCartMax
@@ -494,7 +503,7 @@ export default function ProductPage({ id }) {
                         ? "Max Reached"
                         : adding
                           ? "Adding..."
-                          : "Add to Cart"}
+                          : "Add to Bag"}
                   </button>
                 </>
               ) : (
@@ -516,7 +525,7 @@ export default function ProductPage({ id }) {
                             ? "Cart limit reached (20 items)"
                             : isItemMax
                               ? "Max 5 per item"
-                              : "Add to cart"
+                              : "Add to Bag"
                         }
                       >
                         {isCartMax
@@ -525,7 +534,7 @@ export default function ProductPage({ id }) {
                             ? "Max Reached"
                             : adding
                               ? "Adding..."
-                              : "Add to Cart"}
+                              : "Add to Bag"}
                       </button>
                     </>
                   ) : (
@@ -553,7 +562,7 @@ export default function ProductPage({ id }) {
               )}
             </div>
             <div className="variant-group">
-              
+
               <button
                 onClick={() => {
                   navigator.clipboard.writeText(window.location.href);
@@ -568,8 +577,8 @@ export default function ProductPage({ id }) {
                   justifyContent: "center",
                   color: "black",
                 }}
-              > 
-                 <Forward size={18} />
+              >
+                <Forward size={18} />
               </button>
             </div>
           </aside>
